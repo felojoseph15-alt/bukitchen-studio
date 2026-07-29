@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bu Kitchen - لوحة التحكم</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg-deep: #07070d;
+  --bg: #0a0a14;
+  --bg-elevated: #10101e;
+  --bg-card: #16162a;
+  --bg-card-hover: #1c1c36;
+  --bg-glass: rgba(22,22,42,0.72);
+  --primary: #8b5cf6;
+  --primary-soft: #a78bfa;
+  --primary-glow: rgba(139,92,246,0.25);
+  --secondary: #f59e0b;
+  --secondary-soft: #fbbf24;
+  --accent: #22d3ee;
+  --accent-glow: rgba(34,211,238,0.2);
+  --success: #22c55e;
+  --danger: #ef4444;
+  --warning: #f59e0b;
+  --text: #f1f5f9;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+  --border: rgba(255,255,255,0.06);
+  --border-light: rgba(255,255,255,0.1);
+  --radius: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --ease: cubic-bezier(0.16,1,0.3,1);
+  --ease-out: cubic-bezier(0,0,0.2,1);
+  --font: 'Poppins', 'Tajawal', system-ui, -apple-system, sans-serif;
+  --sidebar-w: 240px;
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  display: flex;
+}
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--bg-deep); }
+::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 3px; }
+html { scrollbar-width: thin; scrollbar-color: var(--primary) var(--bg-deep); }
+
+/* ===== SIDEBAR ===== */
+.sidebar {
+  position: fixed; top: 0; right: 0; bottom: 0; width: var(--sidebar-w);
+  background: var(--bg-elevated); border-left: 1px solid var(--border);
+  display: flex; flex-direction: column; z-index: 100;
+}
+.sidebar-header {
+  padding: 20px; border-bottom: 1px solid var(--border); text-align: center;
+}
+.sidebar-header a {
+  text-decoration: none; color: var(--text); font-weight: 700; font-size: 20px;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.sidebar-header a span { color: var(--primary); }
+.sidebar-header small { display: block; font-size: 11px; color: var(--text-dim); margin-top: 2px; }
+.sidebar-nav { flex: 1; padding: 12px 8px; overflow-y: auto; }
+.sidebar-nav a {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 14px; border-radius: 10px; color: var(--text-muted);
+  text-decoration: none; font-size: 14px; font-weight: 500;
+  transition: all 0.2s var(--ease-out); margin-bottom: 2px;
+}
+.sidebar-nav a:hover { background: var(--bg-card); color: var(--text); }
+.sidebar-nav a.active { background: var(--primary); color: #fff; box-shadow: 0 4px 20px var(--primary-glow); }
+.sidebar-nav a i { font-style: normal; width: 22px; text-align: center; font-size: 16px; }
+.sidebar-nav .nav-label { font-size: 10px; color: var(--text-dim); padding: 12px 14px 4px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+.sidebar-footer {
+  padding: 14px 12px; border-top: 1px solid var(--border);
+  display: flex; flex-direction: column; gap: 6px;
+}
+.sidebar-footer .admin-info { font-size: 12px; color: var(--text-muted); padding: 0 4px; }
+.sidebar-footer .admin-info strong { color: var(--text); }
+.sidebar-footer a {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 12px; border-radius: 8px; color: var(--text-muted);
+  text-decoration: none; font-size: 13px; font-weight: 500;
+  transition: all 0.2s ease;
+}
+.sidebar-footer a:hover { background: rgba(239,68,68,0.1); color: var(--danger); }
+.hamburger {
+  display: none; position: fixed; top: 12px; right: 12px; z-index: 200;
+  width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--border);
+  background: var(--bg-card); color: var(--text); font-size: 20px;
+  cursor: pointer; align-items: center; justify-content: center;
+}
+
+/* ===== MAIN ===== */
+.main {
+  margin-right: var(--sidebar-w); flex: 1; padding: 24px 28px; min-height: 100vh;
+}
+.page-header { margin-bottom: 24px; }
+.page-header h1 { font-size: 22px; font-weight: 800; }
+.page-header h1 span { color: var(--primary); }
+.page-header p { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+.page { display: none; }
+.page.active { display: block; }
+
+/* ===== STATS ===== */
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-bottom: 28px; }
+.stat-card {
+  background: var(--bg-card); border-radius: var(--radius); border: 1px solid var(--border);
+  padding: 18px 20px; transition: all 0.25s ease;
+}
+.stat-card:hover { border-color: var(--primary); transform: translateY(-2px); }
+.stat-card .stat-icon { font-size: 24px; margin-bottom: 8px; display: block; }
+.stat-card .stat-value { font-size: 28px; font-weight: 800; }
+.stat-card .stat-label { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+.stat-card.purple .stat-value { color: var(--primary); }
+.stat-card.amber .stat-value { color: var(--secondary); }
+.stat-card.cyan .stat-value { color: var(--accent); }
+.stat-card.green .stat-value { color: var(--success); }
+
+/* ===== RECENT ACTIVITY ===== */
+.recent-section { background: var(--bg-card); border-radius: var(--radius); border: 1px solid var(--border); padding: 20px; margin-bottom: 28px; }
+.recent-section h3 { font-size: 15px; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+.recent-section h3 span { color: var(--primary); }
+.activity-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 13px;
+}
+.activity-item:last-child { border-bottom: none; }
+.activity-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.activity-dot.green { background: var(--success); }
+.activity-dot.amber { background: var(--secondary); }
+.activity-dot.red { background: var(--danger); }
+.activity-text { color: var(--text-muted); flex: 1; }
+.activity-text strong { color: var(--text); }
+.activity-time { font-size: 11px; color: var(--text-dim); white-space: nowrap; }
+
+/* ===== TOOLBAR ===== */
+.toolbar { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; align-items: center; }
+.toolbar button {
+  padding: 8px 18px; border-radius: 8px; font-family: var(--font);
+  font-size: 13px; font-weight: 600; border: none; cursor: pointer;
+  transition: all 0.25s var(--ease-out); display: inline-flex; align-items: center; gap: 6px;
+}
+.btn-add { background: var(--primary); color: #fff; }
+.btn-add:hover { background: var(--primary-soft); transform: translateY(-1px); }
+.btn-edit { background: rgba(34,211,238,0.12); color: var(--accent); border: 1px solid rgba(34,211,238,0.2) !important; }
+.btn-edit:hover { background: rgba(34,211,238,0.2); }
+.btn-danger { background: rgba(239,68,68,0.12); color: var(--danger); border: 1px solid rgba(239,68,68,0.2) !important; }
+.btn-danger:hover { background: rgba(239,68,68,0.2); }
+.btn-outline { background: transparent; color: var(--text-muted); border: 1px solid var(--border) !important; }
+.btn-outline:hover { border-color: var(--text-muted); color: var(--text); }
+.search-input {
+  padding: 8px 14px; background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 8px; color: var(--text); font-family: var(--font); font-size: 13px;
+  flex: 1; min-width: 150px;
+}
+.search-input:focus { outline: none; border-color: var(--primary); }
+.filter-select {
+  padding: 8px 14px; background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 8px; color: var(--text); font-family: var(--font); font-size: 13px;
+}
+
+/* ===== TABLE ===== */
+.table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: var(--radius); border: 1px solid var(--border); }
+table { width: 100%; border-collapse: collapse; background: var(--bg-card); min-width: 550px; }
+th, td { padding: 10px 14px; text-align: right; font-size: 13px; border-bottom: 1px solid var(--border); }
+th { background: rgba(255,255,255,0.03); color: var(--text-muted); font-weight: 600; }
+td { color: var(--text); }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: rgba(255,255,255,0.02); }
+.actions { display: flex; gap: 6px; }
+.actions button {
+  padding: 4px 10px; border-radius: 4px; border: none; font-family: var(--font);
+  font-size: 12px; cursor: pointer; transition: all 0.25s ease;
+  display: inline-flex; align-items: center; gap: 4px;
+}
+.thumb-img { width: 50px; height: 28px; object-fit: cover; border-radius: 4px; }
+.status-badge { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 20px; display: inline-block; }
+.status-badge.confirmed { background: rgba(34,197,94,0.12); color: var(--success); }
+.status-badge.pending { background: rgba(139,92,246,0.12); color: var(--primary-soft); }
+.status-badge.cancelled { background: rgba(239,68,68,0.12); color: var(--danger); }
+.plat-badge { display: inline-block; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 600; margin: 1px; }
+.empty-state { text-align: center; padding: 40px 20px; }
+.empty-state p { color: var(--text-muted); font-size: 14px; }
+
+/* ===== MODAL ===== */
+.modal-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.7); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  z-index: 5000; align-items: center; justify-content: center; padding: 20px;
+}
+.modal-overlay.active { display: flex; }
+.modal {
+  background: var(--bg-glass); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
+  border-radius: var(--radius-xl); border: 1px solid var(--border-light);
+  width: 100%; max-width: 520px; position: relative;
+  animation: modalIn 0.35s var(--ease); max-height: 90vh; overflow-y: auto;
+}
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.92) translateY(20px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+.modal-close {
+  position: absolute; top: 12px; left: 12px; width: 36px; height: 36px;
+  background: rgba(255,255,255,0.06); border: none; border-radius: 50%;
+  color: var(--text-muted); font-size: 18px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.25s ease; z-index: 10;
+}
+.modal-close:hover { background: rgba(255,255,255,0.12); color: var(--text); }
+.modal-body { padding: 32px 24px 24px; }
+.modal-body h3 { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+.modal-body > p { font-size: 14px; color: var(--text-muted); margin-bottom: 18px; }
+.field { margin-bottom: 14px; }
+.field label { display: block; font-size: 13px; font-weight: 600; color: var(--text-muted); margin-bottom: 5px; }
+.field input, .field select, .field textarea {
+  width: 100%; padding: 12px 14px; background: var(--bg-elevated);
+  border: 1px solid var(--border); border-radius: 10px; color: var(--text);
+  font-family: var(--font); font-size: 14px; transition: border-color 0.25s ease;
+}
+.field input:focus, .field select:focus, .field textarea:focus {
+  outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-glow);
+}
+.field textarea { resize: vertical; min-height: 60px; }
+.modal-body button[type="submit"] {
+  width: 100%; padding: 14px; background: var(--primary); color: #fff;
+  border: none; border-radius: 10px; font-family: var(--font);
+  font-size: 15px; font-weight: 700; cursor: pointer;
+  transition: all 0.3s var(--ease-out); margin-top: 2px;
+}
+.modal-body button[type="submit"]:hover { background: var(--primary-soft); transform: translateY(-1px); box-shadow: 0 8px 24px var(--primary-glow); }
+
+/* ===== TOAST ===== */
+.toast {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(100px);
+  background: var(--bg-glass); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-light); border-radius: 12px;
+  padding: 14px 28px; font-size: 14px; font-weight: 500; color: var(--text);
+  z-index: 9999; opacity: 0; transition: all 0.4s var(--ease); pointer-events: none;
+  white-space: nowrap;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+.toast.success { border-color: var(--success); }
+.toast.error { border-color: var(--danger); }
+
+/* ===== LOGIN PAGE ===== */
+.login-page {
+  display: flex; align-items: center; justify-content: center;
+  min-height: 100vh; padding: 20px;
+}
+.login-box {
+  background: var(--bg-card); border-radius: var(--radius-xl);
+  border: 1px solid var(--border); padding: 40px 32px;
+  width: 100%; max-width: 400px; text-align: center;
+}
+.login-box .logo { font-size: 36px; font-weight: 900; margin-bottom: 4px; }
+.login-box .logo span { color: var(--primary); }
+.login-box .sub { font-size: 13px; color: var(--text-muted); margin-bottom: 24px; }
+.login-box .auth-form input { text-align: center; }
+.login-box .error-msg { color: var(--danger); font-size: 13px; margin-bottom: 10px; display: none; }
+.login-box .back-link { display: block; margin-top: 14px; font-size: 13px; color: var(--text-muted); text-decoration: none; }
+.login-box .back-link:hover { color: var(--primary-soft); }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .sidebar { right: -280px; transition: right 0.3s var(--ease); }
+  .sidebar.open { right: 0; }
+  .hamburger { display: flex; }
+  .main { margin-right: 0; padding: 16px; padding-top: 60px; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px) {
+  .stats-grid { grid-template-columns: 1fr; }
+  .modal { max-width: 100%; }
+}
+</style>
+</head>
+<body>
+
+<div class="hamburger" id="hamburger">☰</div>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <a href="index.html"><span>♪</span> Bu Kitchen</a>
+    <small>لوحة التحكم</small>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-label">عام</div>
+    <a href="#" class="active" data-page="dashboard"><i>◉</i> الإحصائيات</a>
+    <div class="nav-label">الإدارة</div>
+    <a href="#" data-page="songs"><i>♪</i> الأغاني</a>
+    <a href="#" data-page="categories"><i>⊞</i> التصنيفات</a>
+    <a href="#" data-page="bookings"><i>✧</i> الحجوزات</a>
+    <a href="#" data-page="requests"><i>☰</i> طلبات الأغاني</a>
+    <a href="#" data-page="users"><i>⌂</i> المستخدمين</a>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="admin-info" id="sidebarAdminInfo"><strong>مدير الاستوديو</strong></div>
+    <a href="#" id="logoutBtn"><i>↩</i> تسجيل الخروج</a>
+    <a href="index.html" style="color:var(--accent);"><i>◁</i> العودة للموقع</a>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+
+<!-- DASHBOARD -->
+<div class="page active" id="page-dashboard">
+  <div class="page-header">
+    <h1>الإحصائيات <span>الرئيسية</span></h1>
+    <p>نظرة عامة على المنصة</p>
+  </div>
+  <div class="stats-grid" id="statsGrid"></div>
+  <div class="recent-section">
+    <h3><span>◉</span> آخر النشاطات</h3>
+    <div id="recentActivity"></div>
+  </div>
+</div>
+
+<!-- SONGS -->
+<div class="page" id="page-songs">
+  <div class="page-header">
+    <h1>إدارة <span>الأغاني</span></h1>
+    <p>إضافة وحذف الأغاني المنتجة</p>
+  </div>
+  <div class="toolbar">
+    <button class="btn-add" id="addSongBtn">+ إضافة أغنية</button>
+    <input type="text" class="search-input" id="searchSongs" placeholder="بحث في الأغاني...">
+  </div>
+  <div id="songsList"></div>
+</div>
+
+<!-- CATEGORIES -->
+<div class="page" id="page-categories">
+  <div class="page-header">
+    <h1>إدارة <span>التصنيفات</span></h1>
+    <p>إضافة وحذف التصنيفات الموسيقية</p>
+  </div>
+  <div class="toolbar">
+    <button class="btn-add" id="addCategoryBtn">+ إضافة تصنيف</button>
+  </div>
+  <div id="categoriesList"></div>
+</div>
+
+<!-- BOOKINGS -->
+<div class="page" id="page-bookings">
+  <div class="page-header">
+    <h1>إدارة <span>الحجوزات</span></h1>
+    <p>متابعة وتأكيد حجوزات الاستوديو</p>
+  </div>
+  <div class="toolbar">
+    <button class="btn-outline" id="exportBookingsBtn">⬇ تصدير</button>
+    <select class="filter-select" id="bookingFilter">
+      <option value="all">كل الحجوزات</option>
+      <option value="pending">قيد الانتظار</option>
+      <option value="confirmed">مؤكدة</option>
+      <option value="cancelled">ملغية</option>
+      <option value="rejected">مرفوضة</option>
+    </select>
+  </div>
+  <div id="bookingsList"></div>
+</div>
+
+<!-- USERS -->
+<div class="page" id="page-users">
+  <div class="page-header">
+    <h1>إدارة <span>المستخدمين</span></h1>
+    <p>عرض المستخدمين المسجلين في المنصة</p>
+  </div>
+  <div id="usersList"></div>
+</div>
+
+<!-- REQUESTS -->
+<div class="page" id="page-requests">
+  <div class="page-header">
+    <h1>طلبات <span>الأغاني</span></h1>
+    <p>إدارة طلبات إضافة الأغاني من المستخدمين</p>
+  </div>
+  <div id="requestsList"></div>
+</div>
+
+</main>
+
+<!-- ADD SONG MODAL -->
+<div class="modal-overlay" id="songModal">
+  <div class="modal">
+    <button class="modal-close" id="songModalClose">✕</button>
+    <div class="modal-body">
+      <h3>إضافة أغنية</h3>
+      <p>أضف أغنية جديدة إلى القائمة</p>
+      <form id="songForm">
+        <div class="field"><label>رابط يوتيوب</label><input type="text" id="songUrl" placeholder="https://youtube.com/watch?v=..." dir="ltr" required></div>
+        <div class="field"><label>اسم الأغنية</label><input type="text" id="songTitle" placeholder="اسم الأغنية" dir="rtl"></div>
+        <div class="field"><label>التصنيف</label><select id="songCategory"></select></div>
+        <div style="border-top:1px solid var(--border);margin:16px 0 12px;padding-top:14px;">
+          <p style="font-size:13px;font-weight:600;color:var(--text-muted);margin-bottom:10px;">روابط استماع (اختياري)</p>
+          <div class="field"><label>سبوتيفاي</label><input type="text" id="songSpotify" placeholder="https://open.spotify.com/track/..." dir="ltr"></div>
+          <div class="field"><label>أنغامي</label><input type="text" id="songAnghami" placeholder="https://play.anghami.com/song/..." dir="ltr"></div>
+          <div class="field"><label>أبل ميوزك</label><input type="text" id="songApple" placeholder="https://music.apple.com/album/..." dir="ltr"></div>
+          <div class="field"><label>ديزر</label><input type="text" id="songDeezer" placeholder="https://deezer.page.link/..." dir="ltr"></div>
+        </div>
+        <button type="submit">إضافة الأغنية</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ADD CATEGORY MODAL -->
+<div class="modal-overlay" id="catModal">
+  <div class="modal">
+    <button class="modal-close" id="catModalClose">✕</button>
+    <div class="modal-body">
+      <h3>إضافة تصنيف</h3>
+      <p>أضف تصنيف موسيقي جديد</p>
+      <form id="catForm">
+        <div class="field"><label>اسم التصنيف</label><input type="text" id="catName" placeholder="مثال: راب، هبة، مهرجانات..." dir="rtl" required></div>
+        <button type="submit">إضافة</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ===== API HELPER =====
+const API_BASE = '/api';
+function getToken() { try { return sessionStorage.getItem('bukitchen_token'); } catch(e) { return null; } }
+function setToken(t) { try { sessionStorage.setItem('bukitchen_token', t); } catch(e) {} }
+function clearToken() { try { sessionStorage.removeItem('bukitchen_token'); } catch(e) {} }
+async function api(method, path, body) {
+  var opts = { method: method, headers: { 'Content-Type': 'application/json' } };
+  var token = getToken();
+  if (token) opts.headers['Authorization'] = 'Bearer ' + token;
+  if (body) opts.body = JSON.stringify(body);
+  var res = await fetch(API_BASE + path, opts);
+  var json = await res.json();
+  if (!res.ok) throw new Error(json.error || 'Request failed');
+  return json;
+}
+function apiGet(path) { return api('GET', path); }
+function apiPost(path, body) { return api('POST', path, body); }
+function apiPut(path, body) { return api('PUT', path, body); }
+function apiPatch(path, body) { return api('PATCH', path, body); }
+function apiDel(path) { return api('DELETE', path); }
+
+// ===== DATA =====
+var data = { users: [], categories: [], songs: [], bookings: [], songRequests: [] };
+var currentUser = null;
+var activePage = 'dashboard';
+
+function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2,6); }
+function esc(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+function hashPw(s) { var h = 0; for (var i = 0; i < s.length; i++) { h = ((h << 5) - h) + s.charCodeAt(i); h |= 0; } return 'h' + Math.abs(h).toString(36); }
+function extractYoutubeId(url) {
+  if (!url) return null;
+  var patterns = [/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/|youtube\.com\/shorts\/)([a-zA-Z0-9_-]{11})/, /^([a-zA-Z0-9_-]{11})$/];
+  for (var i = 0; i < patterns.length; i++) { var m = url.match(patterns[i]); if (m) return m[1]; }
+  return null;
+}
+function getThumb(id) { return 'https://img.youtube.com/vi/' + id + '/hqdefault.jpg'; }
+
+async function loadFromAPI() {
+  try {
+    var results = await Promise.all([
+      apiGet('/songs').catch(function() { return []; }),
+      apiGet('/categories').catch(function() { return []; }),
+      apiGet('/bookings').catch(function() { return []; }),
+      apiGet('/requests').catch(function() { return []; }),
+      apiGet('/users').catch(function() { return []; }),
+    ]);
+    data.songs = results[0];
+    data.categories = results[1];
+    data.bookings = results[2];
+    data.songRequests = results[3];
+    data.users = results[4];
+  } catch(e) {}
+}
+
+// ===== AUTH =====
+async function checkAuth() {
+  try {
+    var t = getToken();
+    if (t) {
+      var me = await apiGet('/auth/me');
+      if (me && me.role === 'admin') {
+        currentUser = me;
+        document.getElementById('sidebarAdminInfo').innerHTML = '<strong>' + esc(me.name) + '</strong><br>' + esc(me.email);
+        return true;
+      }
+    }
+  } catch(e) { clearToken(); }
+  return false;
+}
+
+async function loginAdmin(emailOrUser, password, cb) {
+  try {
+    var res = await apiPost('/auth/login', { emailOrUser: emailOrUser, password: password });
+    if (res.user && res.user.role === 'admin') {
+      currentUser = res.user;
+      setToken(res.token);
+      document.getElementById('sidebarAdminInfo').innerHTML = '<strong>' + esc(res.user.name) + '</strong><br>' + esc(res.user.email);
+      if (cb) cb(null, res.user);
+      return true;
+    }
+  } catch(e) {}
+  if (cb) cb(new Error('Invalid credentials'));
+  return false;
+}
+
+function logout() {
+  currentUser = null;
+  clearToken();
+  window.location.href = window.location.pathname + '?login=1';
+}
+
+// ===== TOAST =====
+function toast(msg, type) {
+  var el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'toast ' + (type || 'success');
+  el.classList.add('show');
+  clearTimeout(el._t);
+  el._t = setTimeout(function() { el.classList.remove('show'); }, 2800);
+}
+
+// ===== RE-RENDER ALL =====
+async function reRender() {
+  await loadFromAPI();
+  if (activePage) switchPage(activePage);
+}
+
+// ===== RENDER STATS =====
+function renderStats() {
+  var grid = document.getElementById('statsGrid');
+  var totalSongs = data.songs.length;
+  var totalBookings = data.bookings.length;
+  var totalUsers = data.users.filter(function(u) { return u.role !== 'admin'; }).length;
+  var totalCats = data.categories.length;
+  var pendingBookings = data.bookings.filter(function(b) { return b.status === 'pending'; }).length;
+  var confirmedBookings = data.bookings.filter(function(b) { return b.status === 'confirmed'; }).length;
+  var pendingRequests = data.songRequests.filter(function(r) { return r.status === 'pending'; }).length;
+  grid.innerHTML =
+    '<div class="stat-card purple"><span class="stat-icon">♪</span><div class="stat-value">' + totalSongs + '</div><div class="stat-label">إجمالي الأغاني</div></div>' +
+    '<div class="stat-card amber"><span class="stat-icon">⊞</span><div class="stat-value">' + totalCats + '</div><div class="stat-label">التصنيفات</div></div>' +
+    '<div class="stat-card cyan"><span class="stat-icon">◉</span><div class="stat-value">' + totalBookings + '</div><div class="stat-label">إجمالي الحجوزات</div></div>' +
+    '<div class="stat-card green"><span class="stat-icon">✓</span><div class="stat-value">' + confirmedBookings + '</div><div class="stat-label">حجوزات مؤكدة</div></div>' +
+    '<div class="stat-card" style="border-color:rgba(245,158,11,0.3);"><span class="stat-icon">⏳</span><div class="stat-value" style="color:var(--secondary);">' + pendingBookings + '</div><div class="stat-label">حجوزات قيد الانتظار</div></div>' +
+    '<div class="stat-card" style="border-color:rgba(139,92,246,0.3);"><span class="stat-icon">☰</span><div class="stat-value" style="color:var(--primary-soft);">' + pendingRequests + '</div><div class="stat-label">طلبات أغاني</div></div>' +
+    '<div class="stat-card"><span class="stat-icon">⌂</span><div class="stat-value">' + totalUsers + '</div><div class="stat-label">المستخدمين</div></div>';
+}
+
+// ===== RENDER ACTIVITY =====
+function renderActivity() {
+  var container = document.getElementById('recentActivity');
+  var activities = [];
+  var allActivities = [];
+  data.bookings.forEach(function(b) {
+    var dotClass = b.status === 'confirmed' ? 'green' : b.status === 'pending' ? 'amber' : 'red';
+    var statusText = b.status === 'confirmed' ? 'مؤكدة' : b.status === 'pending' ? 'قيد الانتظار' : 'ملغية';
+    allActivities.push({ createdAt: b.createdAt, dot: dotClass, html: 'حجز <strong>' + esc(b.userName) + '</strong> — ' + b.date + ' ' + b.time + ' <span style="color:var(--text-dim)">(' + statusText + ')</span>', time: new Date(b.createdAt).toLocaleDateString('ar-EG') });
+  });
+  data.songRequests.forEach(function(r) {
+    var dotClass = r.status === 'approved' ? 'green' : r.status === 'rejected' ? 'red' : 'amber';
+    var statusText = r.status === 'approved' ? 'مقبولة' : r.status === 'rejected' ? 'مرفوضة' : 'قيد الانتظار';
+    allActivities.push({ createdAt: r.createdAt, dot: dotClass, html: 'طلب أغنية من <strong>' + esc(r.userName) + '</strong> — ' + esc(r.title) + ' <span style="color:var(--text-dim)">(' + statusText + ')</span>', time: new Date(r.createdAt).toLocaleDateString('ar-EG') });
+  });
+  allActivities.sort(function(a, b) { return b.createdAt - a.createdAt; }).slice(0, 8).forEach(function(a) { activities.push(a); });
+  if (activities.length === 0) {
+    container.innerHTML = '<div class="empty-state"><p>لا توجد نشاطات حديثة</p></div>';
+    return;
+  }
+  container.innerHTML = activities.map(function(a) {
+    return '<div class="activity-item"><span class="activity-dot ' + a.dot + '"></span><span class="activity-text">' + a.html + '</span><span class="activity-time">' + a.time + '</span></div>';
+  }).join('');
+}
+
+// ===== RENDER SONGS =====
+function renderSongs(query) {
+  var container = document.getElementById('songsList');
+  if (!query) query = document.getElementById('searchSongs').value.trim();
+  var list = data.songs.slice();
+  if (query) list = list.filter(function(s) { return s.title.toLowerCase().includes(query.toLowerCase()); });
+  if (!list.length) {
+    container.innerHTML = '<div class="empty-state"><p>لا توجد أغانٍ' + (query ? ' تطابق البحث' : '') + '</p></div>';
+    return;
+  }
+  container.innerHTML = '<div class="table-wrap"><table><thead><tr><th>#</th><th>الصورة</th><th>الأغنية</th><th>التصنيف</th><th>روابط</th><th>الإجراءات</th></tr></thead><tbody>' +
+    list.map(function(s, i) {
+      var catName = '';
+      for (var j = 0; j < data.categories.length; j++) { if (data.categories[j].id === s.catId) { catName = data.categories[j].name; break; } }
+      var badges = '';
+      if (s.spotify) badges += '<span class="plat-badge" style="background:rgba(29,185,84,0.15);color:#1db954;">S</span>';
+      if (s.anghami) badges += '<span class="plat-badge" style="background:rgba(255,85,0,0.15);color:#f50;">A</span>';
+      if (s.appleMusic) badges += '<span class="plat-badge" style="background:rgba(250,36,60,0.15);color:#fa243c;">AM</span>';
+      if (s.deezer) badges += '<span class="plat-badge" style="background:rgba(255,0,153,0.15);color:#ff0099;">D</span>';
+      return '<tr><td>' + (i+1) + '</td><td><img src="' + getThumb(s.id) + '" class="thumb-img"></td><td>' + esc(s.title) + '</td><td>' + esc(catName) + '</td><td>' + (badges || '<span style="color:var(--text-muted);font-size:11px;">—</span>') + '</td><td><div class="actions"><button class="btn-danger" data-del-song="' + s.id + '">✕ حذف</button></div></td></tr>';
+    }).join('') + '</tbody></table></div>';
+}
+
+// ===== RENDER CATEGORIES =====
+function renderCategories() {
+  var container = document.getElementById('categoriesList');
+  if (!data.categories.length) {
+    container.innerHTML = '<div class="empty-state"><p>لا توجد تصنيفات</p></div>';
+    return;
+  }
+  container.innerHTML = '<div class="table-wrap"><table><thead><tr><th>#</th><th>التصنيف</th><th>الأغاني</th><th>الإجراءات</th></tr></thead><tbody>' +
+    data.categories.map(function(c, i) {
+      var count = data.songs.filter(function(s) { return s.catId === c.id; }).length;
+      return '<tr><td>' + (i+1) + '</td><td>' + esc(c.name) + '</td><td>' + count + '</td><td><div class="actions"><button class="btn-danger" data-del-cat="' + c.id + '">✕ حذف</button></div></td></tr>';
+    }).join('') + '</tbody></table></div>';
+}
+
+// ===== RENDER BOOKINGS =====
+function renderBookings() {
+  var container = document.getElementById('bookingsList');
+  var filter = document.getElementById('bookingFilter').value;
+  var list = data.bookings.slice();
+  if (filter !== 'all') list = list.filter(function(b) { return b.status === filter; });
+  if (!list.length) {
+    container.innerHTML = '<div class="empty-state"><p>لا توجد حجوزات</p></div>';
+    return;
+  }
+  container.innerHTML = '<div class="table-wrap"><table><thead><tr><th>#</th><th>المستخدم</th><th>التاريخ</th><th>الوقت</th><th>المدة</th><th>الحالة</th><th>الإجراءات</th></tr></thead><tbody>' +
+    list.sort(function(a,b) { return b.createdAt - a.createdAt; }).map(function(b, i) {
+      var stCls = b.status === 'confirmed' ? 'confirmed' : b.status === 'pending' ? 'pending' : 'cancelled';
+      var stTxt = b.status === 'confirmed' ? 'مؤكدة' : b.status === 'pending' ? 'قيد الانتظار' : b.status === 'rejected' ? 'مرفوضة' : 'ملغية';
+      return '<tr><td>' + (i+1) + '</td><td>' + esc(b.userName) + '<br><span style="font-size:11px;color:var(--text-dim);">' + esc(b.userPhone || '') + '</span></td><td>' + b.date + '</td><td>' + b.time + '</td><td>' + b.duration + ' س</td><td><span class="status-badge ' + stCls + '">' + stTxt + '</span></td><td><div class="actions">' +
+        (b.status === 'pending' ? '<button class="btn-edit" data-confirm="' + b.id + '">✓ تأكيد</button><button class="btn-danger" data-reject="' + b.id + '">✕ رفض</button>' : '') +
+        (b.status !== 'cancelled' && b.status !== 'rejected' ? '<button class="btn-danger" data-cancel-booking="' + b.id + '">إلغاء</button>' : '') +
+        '</div></td></tr>';
+    }).join('') + '</tbody></table></div>';
+}
+
+// ===== RENDER REQUESTS =====
+function renderRequests() {
+  var container = document.getElementById('requestsList');
+  if (!data.songRequests.length) {
+    container.innerHTML = '<div class="empty-state"><p>لا توجد طلبات</p></div>';
+    return;
+  }
+  container.innerHTML = '<div class="table-wrap"><table><thead><tr><th>#</th><th>المستخدم</th><th>الأغنية</th><th>الفنان</th><th>النوع</th><th>الحالة</th><th>الإجراءات</th></tr></thead><tbody>' +
+    data.songRequests.sort(function(a,b) { return b.createdAt - a.createdAt; }).map(function(r, i) {
+      var stCls = r.status === 'approved' ? 'confirmed' : r.status === 'rejected' ? 'cancelled' : 'pending';
+      var stTxt = r.status === 'approved' ? 'مقبولة' : r.status === 'rejected' ? 'مرفوضة' : 'قيد الانتظار';
+      return '<tr><td>' + (i+1) + '</td><td>' + esc(r.userName) + '</td><td>' + esc(r.title) + '</td><td>' + esc(r.artist) + '</td><td>' + esc(r.genre) + '</td><td><span class="status-badge ' + stCls + '">' + stTxt + '</span></td><td><div class="actions">' +
+        (r.status === 'pending' ? '<button class="btn-edit" data-approve-req="' + r.id + '">✓ موافقة</button><button class="btn-danger" data-reject-req="' + r.id + '">✕ رفض</button>' : '') +
+        '</div></td></tr>';
+    }).join('') + '</tbody></table></div>';
+}
+
+// ===== RENDER USERS =====
+function renderUsers() {
+  var container = document.getElementById('usersList');
+  var list = data.users.filter(function(u) { return u.role !== 'admin'; });
+  if (!list.length) {
+    container.innerHTML = '<div class="empty-state"><p>لا يوجد مستخدمون مسجلون</p></div>';
+    return;
+  }
+  container.innerHTML = '<div class="table-wrap"><table><thead><tr><th>#</th><th>الاسم</th><th>البريد</th><th>الهاتف</th><th>الحجوزات</th><th>تاريخ التسجيل</th></tr></thead><tbody>' +
+    list.map(function(u, i) {
+      var c = data.bookings.filter(function(b) { return b.userId === u.id; }).length;
+      return '<tr><td>' + (i+1) + '</td><td>' + esc(u.name) + '</td><td>' + esc(u.email) + '</td><td>' + esc(u.phone || '-') + '</td><td>' + c + '</td><td>' + new Date(u.createdAt).toLocaleDateString('ar-EG') + '</td></tr>';
+    }).join('') + '</tbody></table></div>';
+}
+
+// ===== NAVIGATION =====
+function switchPage(page) {
+  activePage = page;
+  document.querySelectorAll('.sidebar-nav a').forEach(function(a) {
+    a.classList.toggle('active', a.dataset.page === page);
+  });
+  document.querySelectorAll('.page').forEach(function(p) {
+    p.classList.toggle('active', p.id === 'page-' + page);
+  });
+  switch (page) {
+    case 'dashboard': renderDashboard(); break;
+    case 'songs': renderSongs(); break;
+    case 'categories': renderCategories(); break;
+    case 'bookings': renderBookings(); break;
+    case 'users': renderUsers(); break;
+    case 'requests': renderRequests(); break;
+  }
+}
+
+function renderDashboard() {
+  renderStats();
+  renderActivity();
+}
+
+// ===== EVENTS =====
+document.querySelectorAll('.sidebar-nav a[data-page]').forEach(function(a) {
+  a.addEventListener('click', function(e) { e.preventDefault(); switchPage(this.dataset.page); });
+});
+
+// Songs search
+document.getElementById('searchSongs').addEventListener('input', function() { renderSongs(this.value.trim()); });
+
+// Add Song
+document.getElementById('addSongBtn').addEventListener('click', function() {
+  var s = document.getElementById('songCategory');
+  s.innerHTML = data.categories.map(function(c) { return '<option value="' + c.id + '">' + esc(c.name) + '</option>'; }).join('');
+  document.getElementById('songModal').classList.add('active');
+});
+document.getElementById('songModalClose').addEventListener('click', function() { closeModal('songModal'); });
+document.getElementById('songModal').addEventListener('click', function(e) { if (e.target === this) closeModal('songModal'); });
+document.getElementById('songForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  var url = document.getElementById('songUrl').value.trim();
+  var title = document.getElementById('songTitle').value.trim();
+  var catId = document.getElementById('songCategory').value;
+  var vid = extractYoutubeId(url);
+  if (!vid) { toast('رابط يوتيوب غير صالح', 'error'); return; }
+  try {
+    await apiPost('/songs', {
+      id: vid,
+      title: title || 'أغنية ' + (data.songs.length + 1),
+      catId: catId,
+      spotify: document.getElementById('songSpotify').value.trim() || '',
+      anghami: document.getElementById('songAnghami').value.trim() || '',
+      appleMusic: document.getElementById('songApple').value.trim() || '',
+      deezer: document.getElementById('songDeezer').value.trim() || ''
+    });
+    toast('تمت إضافة الأغنية');
+    closeModal('songModal'); document.getElementById('songForm').reset();
+    await reRender();
+  } catch(err) { toast(err.message, 'error'); }
+});
+
+// Add Category
+document.getElementById('addCategoryBtn').addEventListener('click', function() { document.getElementById('catModal').classList.add('active'); });
+document.getElementById('catModalClose').addEventListener('click', function() { closeModal('catModal'); });
+document.getElementById('catModal').addEventListener('click', function(e) { if (e.target === this) closeModal('catModal'); });
+document.getElementById('catForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  var name = document.getElementById('catName').value.trim();
+  if (!name) { toast('يرجى إدخال اسم التصنيف', 'error'); return; }
+  try {
+    await apiPost('/categories', { name: name });
+    toast('تمت إضافة التصنيف');
+    closeModal('catModal'); document.getElementById('catForm').reset();
+    await reRender();
+  } catch(err) { toast(err.message, 'error'); }
+});
+
+// Delete song
+document.getElementById('songsList').addEventListener('click', async function(e) {
+  var btn = e.target.closest('[data-del-song]');
+  if (!btn) return;
+  if (!confirm('حذف الأغنية؟')) return;
+  try {
+    await apiDel('/songs/' + btn.dataset.delSong);
+    toast('تم حذف الأغنية');
+    await reRender();
+  } catch(err) { toast(err.message, 'error'); }
+});
+
+// Delete category
+document.getElementById('categoriesList').addEventListener('click', async function(e) {
+  var btn = e.target.closest('[data-del-cat]');
+  if (!btn) return;
+  if (!confirm('حذف التصنيف؟')) return;
+  try {
+    await apiDel('/categories/' + btn.dataset.delCat);
+    toast('تم حذف التصنيف');
+    await reRender();
+  } catch(err) { toast(err.message, 'error'); }
+});
+
+// Booking actions
+document.getElementById('bookingsList').addEventListener('click', async function(e) {
+  var confirmBtn = e.target.closest('[data-confirm]');
+  if (confirmBtn) {
+    if (!confirm('تأكيد هذا الحجز؟')) return;
+    var id = confirmBtn.dataset.confirm;
+    try {
+      await apiPatch('/bookings/' + id + '/status', { status: 'confirmed' });
+      toast('تم تأكيد الحجز');
+      await reRender();
+    } catch(err) { toast(err.message, 'error'); }
+    return;
+  }
+  var rejectBtn = e.target.closest('[data-reject]');
+  if (rejectBtn) {
+    if (!confirm('رفض هذا الحجز؟')) return;
+    try {
+      await apiPatch('/bookings/' + rejectBtn.dataset.reject + '/status', { status: 'rejected' });
+      toast('تم رفض الحجز');
+      await reRender();
+    } catch(err) { toast(err.message, 'error'); }
+    return;
+  }
+  var cancelBtn = e.target.closest('[data-cancel-booking]');
+  if (cancelBtn) {
+    if (!confirm('إلغاء هذا الحجز؟')) return;
+    try {
+      await apiPatch('/bookings/' + cancelBtn.dataset.cancelBooking + '/status', { status: 'cancelled' });
+      toast('تم إلغاء الحجز');
+      await reRender();
+    } catch(err) { toast(err.message, 'error'); }
+  }
+});
+
+// Booking filter
+document.getElementById('bookingFilter').addEventListener('change', renderBookings);
+
+// Export bookings
+document.getElementById('exportBookingsBtn').addEventListener('click', function() {
+  var csv = 'المستخدم,البريد,الهاتف,التاريخ,الوقت,المدة,الحالة,ملاحظات\n';
+  data.bookings.forEach(function(b) {
+    var statusText = b.status === 'confirmed' ? 'مؤكدة' : b.status === 'pending' ? 'قيد الانتظار' : b.status === 'rejected' ? 'مرفوضة' : 'ملغية';
+    csv += '"' + b.userName + '","' + b.userEmail + '","' + (b.userPhone || '') + '","' + b.date + '","' + b.time + '","' + b.duration + '","' + statusText + '","' + (b.notes || '') + '"\n';
+  });
+  var blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a'); a.href = url; a.download = 'bookings_export.csv'; a.click();
+  URL.revokeObjectURL(url);
+  toast('تم تصدير الحجوزات');
+});
+
+// Requests actions
+document.getElementById('requestsList').addEventListener('click', async function(e) {
+  var ar = e.target.closest('[data-approve-req]');
+  if (ar) {
+    if (!confirm('موافقة على طلب الأغنية؟')) return;
+    try {
+      await apiPatch('/requests/' + ar.dataset.approveReq + '/status', { status: 'approved' });
+      toast('تمت الموافقة على الطلب');
+      await reRender();
+    } catch(err) { toast(err.message, 'error'); }
+    return;
+  }
+  var rr = e.target.closest('[data-reject-req]');
+  if (rr) {
+    if (!confirm('رفض طلب الأغنية؟')) return;
+    try {
+      await apiPatch('/requests/' + rr.dataset.rejectReq + '/status', { status: 'rejected' });
+      toast('تم رفض الطلب');
+      await reRender();
+    } catch(err) { toast(err.message, 'error'); }
+    return;
+  }
+});
+
+// Logout
+document.getElementById('logoutBtn').addEventListener('click', function(e) {
+  e.preventDefault();
+  if (confirm('تسجيل الخروج من لوحة التحكم؟')) logout();
+});
+
+// Hamburger
+document.getElementById('hamburger').addEventListener('click', function() {
+  document.getElementById('sidebar').classList.toggle('open');
+});
+document.addEventListener('click', function(e) {
+  var sidebar = document.getElementById('sidebar');
+  if (window.innerWidth <= 768 && sidebar.classList.contains('open') && !sidebar.contains(e.target) && e.target.id !== 'hamburger') {
+    sidebar.classList.remove('open');
+  }
+});
+
+// ===== MODAL HELPERS =====
+function closeModal(id) {
+  document.getElementById(id).classList.remove('active');
+  document.querySelectorAll('#' + id + ' form').forEach(function(f) { f.reset(); });
+}
+
+// ===== UNDO DELETE =====
+var lastDeletedSong = null;
+var undoTimeout = null;
+
+// ===== INIT =====
+async function init() {
+  await loadFromAPI();
+  var urlParams = new URLSearchParams(window.location.search);
+
+  if (urlParams.get('login') === '1') {
+    showLoginForm();
+    return;
+  }
+
+  if (!(await checkAuth())) {
+    showLoginForm();
+    return;
+  }
+
+  switchPage('dashboard');
+}
+
+function showLoginForm() {
+  var main = document.querySelector('.main');
+  document.querySelector('.sidebar').style.display = 'none';
+  document.getElementById('hamburger').style.display = 'none';
+  main.style.marginRight = '0';
+  main.innerHTML =
+    '<div class="login-page">' +
+    '<div class="login-box">' +
+    '<div class="logo"><span>♪</span> Bu Kitchen</div>' +
+    '<div class="sub">لوحة التحكم — تسجيل دخول الأدمن</div>' +
+    '<div class="error-msg" id="loginError"></div>' +
+    '<form class="auth-form" id="adminLoginForm">' +
+    '<div class="field"><input type="text" id="loginEmail" placeholder="البريد الإلكتروني أو اسم المستخدم" dir="ltr" required></div>' +
+    '<div class="field"><input type="password" id="loginPassword" placeholder="كلمة المرور" dir="ltr" required></div>' +
+    '<button type="submit">دخول</button>' +
+    '</form>' +
+    '<a href="index.html" class="back-link">← العودة للموقع الرئيسي</a>' +
+    '</div>' +
+    '</div>';
+
+  document.getElementById('adminLoginForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    var email = document.getElementById('loginEmail').value.trim();
+    var pass = document.getElementById('loginPassword').value;
+    if (!email || !pass) {
+      document.getElementById('loginError').textContent = 'يرجى ملء جميع الحقول';
+      document.getElementById('loginError').style.display = 'block';
+      return;
+    }
+    var ok = await loginAdmin(email, pass);
+    if (ok) {
+      document.getElementById('loginError').style.display = 'none';
+      location.reload();
+    } else {
+      document.getElementById('loginError').textContent = 'بيانات الدخول غير صحيحة أو ليس لديك صلاحية أدمن';
+      document.getElementById('loginError').style.display = 'block';
+    }
+  });
+}
+
+init().catch(function(e) { console.error(e); });
+</script>
+</body>
+</html>
