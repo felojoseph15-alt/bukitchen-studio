@@ -1,0 +1,2270 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="all">
+<meta name="googlebot" content="all">
+<meta name="GPTBot" content="all">
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+<script>
+var firebaseConfig = {
+  apiKey: "AIzaSyBFI9tgTp2tmhxUxpeaA8365hJg5wd21wU",
+  authDomain: "bu-kitchen.firebaseapp.com",
+  projectId: "bu-kitchen",
+  storageBucket: "bu-kitchen.firebasestorage.app",
+  messagingSenderId: "830958707290",
+  appId: "1:830958707290:web:ddb6a7f5d4f2c4ba5a2e63",
+  measurementId: "G-Q22D38HLM1"
+};
+firebase.initializeApp(firebaseConfig);
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "MusicRecording",
+  "name": "Bu Kitchen Studio",
+  "description": "استوديو تسجيل صوتي احترافي في الإسكندرية - Professional recording studio in Alexandria",
+  "url": "https://bukitchen.surge.sh",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Alexandria",
+    "addressCountry": "EG"
+  },
+  "serviceType": ["AudioRecording", "Mixing", "Mastering", "SoundDesign", "VoiceOver"]
+}
+</script>
+<title>Bu Kitchen - استوديو تسجيل</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg-deep: #07070d;
+  --bg: #0a0a14;
+  --bg-elevated: #10101e;
+  --bg-card: #16162a;
+  --bg-card-hover: #1c1c36;
+  --bg-glass: rgba(22,22,42,0.72);
+  --primary: #8b5cf6;
+  --primary-soft: #a78bfa;
+  --primary-glow: rgba(139,92,246,0.25);
+  --secondary: #f59e0b;
+  --secondary-soft: #fbbf24;
+  --accent: #22d3ee;
+  --accent-glow: rgba(34,211,238,0.2);
+  --success: #22c55e;
+  --danger: #ef4444;
+  --text: #f1f5f9;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+  --border: rgba(255,255,255,0.06);
+  --border-light: rgba(255,255,255,0.1);
+  --radius: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --ease: cubic-bezier(0.16,1,0.3,1);
+  --ease-out: cubic-bezier(0,0,0.2,1);
+  --font: 'Poppins', 'Tajawal', system-ui, -apple-system, sans-serif;
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+::selection { background: var(--primary); color: #fff; }
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--bg-deep); }
+::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 3px; }
+html { scrollbar-width: thin; scrollbar-color: var(--primary) var(--bg-deep); }
+:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; }
+
+/* ===== AMBIENT BLOBS ===== */
+.ambient-blob {
+  position: fixed; border-radius: 50%; pointer-events: none; z-index: 0;
+  filter: blur(80px); opacity: 0.12;
+}
+.ambient-blob:nth-child(1) {
+  width: 600px; height: 600px; background: var(--primary);
+  top: -10%; left: -10%; animation: blobFloat1 20s ease-in-out infinite;
+}
+.ambient-blob:nth-child(2) {
+  width: 500px; height: 500px; background: var(--secondary);
+  bottom: -10%; right: -10%; animation: blobFloat2 25s ease-in-out infinite;
+}
+.ambient-blob:nth-child(3) {
+  width: 400px; height: 400px; background: var(--accent);
+  top: 50%; left: 50%; transform: translate(-50%,-50%);
+  animation: blobFloat3 18s ease-in-out infinite;
+}
+@keyframes blobFloat1 {
+  0%,100% { transform: translate(0,0) scale(1); }
+  33% { transform: translate(80px,-60px) scale(1.1); }
+  66% { transform: translate(-40px,40px) scale(0.9); }
+}
+@keyframes blobFloat2 {
+  0%,100% { transform: translate(0,0) scale(1); }
+  33% { transform: translate(-60px,80px) scale(0.85); }
+  66% { transform: translate(40px,-40px) scale(1.15); }
+}
+@keyframes blobFloat3 {
+  0%,100% { transform: translate(-50%,-50%) scale(1); opacity: 0.08; }
+  50% { transform: translate(-50%,-50%) scale(1.3); opacity: 0.15; }
+}
+
+/* ===== SCROLL PROGRESS ===== */
+#scrollProgress {
+  position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 9998;
+  background: transparent;
+}
+#scrollProgress span {
+  display: block; height: 100%; width: 0%;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  transition: width 0.1s linear;
+}
+
+/* ===== CUSTOM CURSOR ===== */
+.cursor-dot, .cursor-ring {
+  position: fixed; pointer-events: none; z-index: 99999;
+  transition: opacity 0.3s ease;
+}
+.cursor-dot {
+  width: 8px; height: 8px; background: var(--primary);
+  border-radius: 50%; transform: translate(-50%,-50%);
+  box-shadow: 0 0 20px var(--primary-glow);
+}
+.cursor-ring {
+  width: 40px; height: 40px; border: 1.5px solid var(--primary-soft);
+  border-radius: 50%; transform: translate(-50%,-50%);
+  transition: width 0.3s var(--ease), height 0.3s var(--ease), border-color 0.3s ease, background 0.3s ease;
+}
+.cursor-ring.hovering {
+  width: 56px; height: 56px; border-color: var(--accent);
+  background: var(--accent-glow);
+}
+@media (hover:none) { .cursor-dot, .cursor-ring { display: none; } }
+
+/* ===== SPLASH ===== */
+.splash {
+  position: fixed; inset: 0; z-index: 99999;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--bg-deep);
+  animation: splashFade 0.6s ease forwards;
+  animation-delay: 1s;
+}
+.splash-content { text-align: center; position: relative; }
+.splash-logo {
+  font-size: 60px; font-weight: 900; color: var(--text);
+  animation: splashBounce 0.8s var(--ease) forwards;
+  letter-spacing: -2px;
+}
+.splash-logo span { color: var(--primary); }
+.splash-sub {
+  font-size: 14px; color: var(--text-muted); margin-top: 8px;
+  opacity: 0; animation: splashFade 0.5s ease forwards; animation-delay: 0.6s;
+}
+.splash-particles {
+  position: absolute; inset: 0; overflow: hidden;
+}
+.splash-particle {
+  position: absolute; width: 4px; height: 4px;
+  background: var(--primary); border-radius: 50%;
+  animation: particleRise 1.5s ease-out forwards;
+}
+@keyframes splashBounce {
+  0% { opacity: 0; transform: scale(0.3); }
+  50% { transform: scale(1.1); }
+  100% { opacity: 1; transform: scale(1); }
+}
+@keyframes splashFade {
+  to { opacity: 0; visibility: hidden; }
+}
+@keyframes particleRise {
+  0% { opacity: 1; transform: translateY(0) scale(1); }
+  100% { opacity: 0; transform: translateY(-120px) scale(0); }
+}
+
+/* ===== NAV ===== */
+nav {
+  position: fixed; top: 16px; left: 16px; right: 16px;
+  z-index: 1000; display: flex; align-items: center; justify-content: space-between;
+  background: var(--bg-glass); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border); border-radius: 60px;
+  padding: 4px 4px 4px 16px; height: 48px;
+  transition: transform 0.4s var(--ease);
+}
+nav.hidden-nav { transform: translateY(-120%); }
+@media (min-width: 768px) {
+  nav { top: 20px; left: 24px; right: 24px; padding: 6px 6px 6px 20px; height: 54px; }
+}
+.nav-logo { display: flex; align-items: center; gap: 8px; text-decoration: none; color: var(--text); font-weight: 700; font-size: 18px; }
+.nav-logo span { color: var(--primary); font-size: 22px; }
+.nav-actions { display: flex; align-items: center; gap: 8px; }
+.nav-auth-btn {
+  padding: 6px 16px; border-radius: 50px; border: none; cursor: pointer;
+  font-family: var(--font); font-size: 13px; font-weight: 600;
+  background: var(--primary); color: #fff;
+  transition: all 0.25s var(--ease-out); white-space: nowrap;
+}
+.nav-auth-btn:hover { background: var(--primary-soft); transform: translateY(-1px); }
+.nav-auth-btn.hidden { display: none; }
+.hidden { display: none !important; }
+.nav-btn {
+  width: 40px; height: 40px; border-radius: 50%; border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(255,255,255,0.06); color: var(--text-muted);
+  transition: all 0.25s var(--ease-out);
+}
+.nav-btn:hover { background: var(--primary); color: #fff; transform: scale(1.05); }
+.nav-btn:active { transform: scale(0.95); }
+
+/* ===== MENU PANEL ===== */
+.menu-overlay {
+  position: fixed; inset: 0; z-index: 998;
+  background: rgba(0,0,0,0.6);
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+.menu-overlay.active { opacity: 1; pointer-events: auto; }
+.menu-panel {
+  position: fixed; top: 0; left: auto; right: 0; bottom: 0; width: 85%; max-width: 380px;
+  z-index: 999; background: var(--bg-glass); backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border-right: 1px solid var(--border-light);
+  padding: 90px 28px 28px;
+  display: flex; flex-direction: column;
+  transform: translateX(100%); transition: transform 0.5s var(--ease);
+}
+.menu-panel.open { transform: translateX(0); }
+.menu-panel nav { all: unset; display: flex; flex-direction: column; gap: 4px; }
+.menu-panel nav a, .menu-panel nav button {
+  color: var(--text-muted); font-size: 22px; font-weight: 500; text-decoration: none;
+  padding: 12px 14px; border-radius: 10px; transition: all 0.25s ease;
+  background: none; border: none; cursor: pointer; text-align: right;
+  font-family: var(--font); display: flex; align-items: center; gap: 12px;
+}
+.menu-panel nav a:hover, .menu-panel nav button:hover {
+  color: var(--text); background: rgba(255,255,255,0.05);
+}
+.menu-panel nav a i, .menu-panel nav button i { font-style: normal; width: 24px; color: var(--primary); font-size: 18px; }
+.menu-divider { height: 1px; background: var(--border); margin: 12px 0; }
+.menu-user { margin-top: auto; padding: 16px 14px; border-radius: 12px; background: rgba(255,255,255,0.03); }
+.menu-user span { display: block; font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+.menu-user small { font-size: 12px; color: var(--text-muted); }
+.menu-email { color: var(--text-muted); font-size: 13px; text-decoration: none; display: block; margin-top: 8px; }
+.menu-socials { display: flex; gap: 12px; margin-top: 12px; }
+.menu-socials a {
+  color: var(--text-dim); font-size: 12px; text-decoration: none;
+  padding: 6px 12px; border-radius: 20px; border: 1px solid var(--border);
+  transition: all 0.25s ease;
+}
+.menu-socials a:hover { color: var(--primary); border-color: var(--primary); }
+
+/* ===== HERO ===== */
+.hero {
+  position: relative; min-height: 100vh; display: flex; align-items: center;
+  overflow: hidden; padding: 100px 20px 60px;
+}
+@media (min-width: 768px) { .hero { padding: 120px 40px 80px; } }
+.hero-grid {
+  position: relative; z-index: 2; width: 100%; max-width: 1200px; margin: 0 auto;
+  display: grid; gap: 40px;
+}
+@media (min-width: 768px) { .hero-grid { grid-template-columns: 1fr 1fr; align-items: center; } }
+.hero-left { display: flex; flex-direction: column; gap: 24px; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 14px; border-radius: 50px; font-size: 12px; font-weight: 600;
+  background: var(--primary-glow); color: var(--primary-soft);
+  border: 1px solid rgba(139,92,246,0.2); width: fit-content;
+  animation: fadeUp 0.6s var(--ease) forwards; opacity: 0;
+}
+.hero-title {
+  font-size: clamp(36px,5vw,60px); font-weight: 800; line-height: 1.1;
+  animation: fadeUp 0.6s var(--ease) forwards; opacity: 0; animation-delay: 0.1s;
+}
+.hero-title span { color: var(--primary); }
+.hero-sub {
+  font-size: 16px; color: var(--text-muted); max-width: 480px; line-height: 1.8;
+  animation: fadeUp 0.6s var(--ease) forwards; opacity: 0; animation-delay: 0.2s;
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.hero-cta {
+  display: flex; gap: 12px; flex-wrap: wrap;
+  animation: fadeUp 0.6s var(--ease) forwards; opacity: 0; animation-delay: 0.3s;
+}
+.btn-primary {
+  position: relative; display: inline-flex; align-items: center; gap: 10px;
+  padding: 14px 28px; border-radius: 50px; border: none; cursor: pointer;
+  font-family: var(--font); font-size: 15px; font-weight: 600;
+  background: var(--primary); color: #fff;
+  transition: all 0.3s var(--ease-out); text-decoration: none; overflow: hidden;
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px var(--primary-glow); }
+.btn-primary:active { transform: scale(0.97); }
+.btn-secondary {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 14px 28px; border-radius: 50px; border: 1px solid var(--border-light);
+  cursor: pointer; font-family: var(--font); font-size: 15px; font-weight: 600;
+  background: transparent; color: var(--text);
+  transition: all 0.3s var(--ease-out); text-decoration: none;
+}
+.btn-secondary:hover { background: rgba(255,255,255,0.05); border-color: var(--text-muted); }
+.btn-secondary:active { transform: scale(0.97); }
+
+/* ===== HERO VISUALIZER ===== */
+.hero-visualizer {
+  position: relative; display: flex; align-items: flex-end; justify-content: center;
+  height: 300px; gap: 4px; padding: 20px 0;
+}
+@media (min-width: 768px) { .hero-visualizer { height: 400px; gap: 6px; } }
+.vis-bar {
+  width: 12px; border-radius: 6px 6px 2px 2px; flex-shrink: 0;
+  background: linear-gradient(to top, var(--primary), var(--accent));
+  animation: visAnim var(--vis-duration, 0.5s) ease-in-out infinite alternate;
+  transform-origin: bottom;
+  opacity: 0.7;
+}
+@keyframes visAnim {
+  from { transform: scaleY(0.2); opacity: 0.4; }
+  to { transform: scaleY(1); opacity: 0.9; }
+}
+.vis-glow {
+  position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 300px; height: 200px;
+  background: radial-gradient(ellipse at center, var(--primary-glow) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ===== SECTIONS ===== */
+section { position: relative; z-index: 2; padding: 80px 20px; }
+@media (min-width: 768px) { section { padding: 120px 40px; } }
+.section-inner { max-width: 1200px; margin: 0 auto; }
+.section-header {
+  text-align: center; margin-bottom: 48px;
+}
+.section-header h2 {
+  font-size: clamp(28px,4vw,42px); font-weight: 800;
+  background: linear-gradient(135deg, var(--text) 0%, var(--text-muted) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.section-header h2 span { -webkit-text-fill-color: transparent; background: linear-gradient(135deg, var(--primary), var(--accent)); -webkit-background-clip: text; background-clip: text; }
+.section-header p { color: var(--text-muted); font-size: 15px; max-width: 500px; margin: 8px auto 0; }
+.section-header .line {
+  width: 40px; height: 3px; background: linear-gradient(90deg, var(--primary), var(--accent));
+  border-radius: 2px; margin: 14px auto 0;
+}
+
+/* ===== CATEGORY PILLS ===== */
+.cat-pills {
+  display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;
+  margin-bottom: 32px;
+}
+.cat-pill {
+  padding: 8px 20px; border-radius: 50px; font-size: 13px; font-weight: 600;
+  background: var(--bg-card); color: var(--text-muted);
+  border: 1px solid var(--border); cursor: pointer; font-family: var(--font);
+  transition: all 0.25s var(--ease-out);
+}
+.cat-pill:hover { border-color: var(--primary); color: var(--primary-soft); }
+.cat-pill.active { background: var(--primary); color: #fff; border-color: var(--primary); box-shadow: 0 4px 20px var(--primary-glow); }
+
+/* ===== SONGS GRID ===== */
+.songs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+@media (max-width: 768px) { .songs-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; } }
+@media (max-width: 480px) { .songs-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 360px) { .songs-grid { grid-template-columns: 1fr; } }
+.song-card {
+  background: var(--bg-card); border-radius: var(--radius-lg); overflow: hidden;
+  border: 1px solid var(--border); cursor: pointer; position: relative;
+  transition: transform 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out);
+  transform-style: preserve-3d; perspective: 800px;
+}
+.song-card:hover {
+  border-color: rgba(139,92,246,0.3);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3), 0 0 40px var(--primary-glow);
+}
+.song-card:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.song-card-thumb {
+  position: relative; width: 100%; padding-top: 56.25%;
+  background: var(--bg-elevated); overflow: hidden;
+}
+.song-card-thumb img {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  object-fit: cover; transition: transform 0.6s var(--ease-out);
+}
+.song-card:hover .song-card-thumb img { transform: scale(1.08); }
+.song-card-thumb .play-overlay {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(0,0,0,0.5); opacity: 0; transition: opacity 0.3s ease;
+}
+.song-card:hover .play-overlay { opacity: 1; }
+.play-overlay-icon {
+  width: 56px; height: 56px; background: var(--primary);
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  transition: transform 0.3s var(--ease-out);
+  box-shadow: 0 0 30px var(--primary-glow);
+}
+.song-card:hover .play-overlay-icon { transform: scale(1.1); }
+.play-overlay-icon svg { width: 22px; height: 22px; fill: #fff; margin-left: 2px; }
+.song-card-body { padding: 14px 16px 10px; }
+.song-card-title { font-size: 14px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--text); }
+.song-card-cat { font-size: 11px; color: var(--primary-soft); font-weight: 500; margin-bottom: 2px; }
+.song-card-meta { font-size: 12px; color: var(--text-dim); }
+.song-card-actions { display: flex; gap: 8px; padding: 0 16px 14px; }
+.song-card-actions button, .song-card-actions a {
+  flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 8px 10px; border-radius: 8px; font-family: var(--font);
+  font-size: 12px; font-weight: 600; border: none; cursor: pointer;
+  transition: all 0.25s var(--ease-out); text-decoration: none;
+}
+.btn-play-card { background: var(--primary); color: #fff; }
+.btn-play-card:hover { background: var(--primary-soft); }
+.btn-youtube-card { background: transparent; color: var(--text-muted); border: 1px solid var(--border); }
+.btn-youtube-card:hover { border-color: #ff0033; color: #ff0033; }
+.btn-delete-card {
+  background: transparent; color: var(--text-muted); border: 1px solid var(--border);
+  padding: 8px; flex: 0; min-width: 44px; min-height: 44px;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.btn-delete-card:hover { border-color: var(--danger); color: var(--danger); }
+.song-card .admin-badge {
+  position: absolute; top: 8px; left: 8px; z-index: 3;
+  background: var(--primary); color: #fff; font-size: 10px; font-weight: 700;
+  padding: 3px 8px; border-radius: 6px;
+}
+.platform-chips { display: flex; gap: 4px; flex-wrap: wrap; padding: 0 16px 8px; }
+.platform-chip {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 3px 8px; border-radius: 4px; font-size: 10px; font-weight: 600;
+  text-decoration: none; transition: all 0.2s ease;
+}
+.empty-state { grid-column: 1/-1; text-align: center; padding: 60px 20px; }
+.empty-state svg { width: 48px; height: 48px; opacity: 0.2; margin-bottom: 16px; }
+.empty-state h3 { font-size: 18px; font-weight: 600; color: var(--text-muted); margin-bottom: 6px; }
+.empty-state p { font-size: 14px; color: var(--text-dim); }
+
+/* ===== STUDIO ===== */
+#studio { background: linear-gradient(180deg, var(--bg) 0%, var(--bg-elevated) 100%); }
+.studio-grid { display: grid; gap: 40px; align-items: center; }
+@media (min-width: 768px) { .studio-grid { grid-template-columns: 1fr 1fr; } }
+.studio-info h3 { font-size: 24px; font-weight: 700; margin-bottom: 12px; }
+.studio-info p { color: var(--text-muted); font-size: 15px; margin-bottom: 20px; line-height: 1.8; }
+.studio-features { display: flex; flex-direction: column; gap: 12px; }
+.studio-feature {
+  display: flex; align-items: center; gap: 12px; font-size: 14px; color: var(--text-muted);
+  padding: 10px 14px; border-radius: 10px; background: var(--bg-card);
+  border: 1px solid var(--border); transition: all 0.25s ease;
+}
+.studio-feature:hover { border-color: var(--primary); background: var(--bg-card-hover); }
+.studio-feature svg { width: 20px; height: 20px; flex-shrink: 0; }
+.studio-visual {
+  background: var(--bg-card); border-radius: var(--radius-xl);
+  border: 1px solid var(--border); min-height: 320px;
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+}
+.studio-visual svg { position: relative; z-index: 2; }
+.studio-visual-wave {
+  position: absolute; bottom: 0; left: 0; right: 0; height: 60%;
+  display: flex; align-items: flex-end; gap: 3px; padding: 0 10%;
+}
+.studio-visual-wave span {
+  flex: 1; background: linear-gradient(to top, var(--primary), transparent);
+  border-radius: 2px 2px 0 0; animation: waveAnim 1.5s ease-in-out infinite alternate;
+}
+@keyframes waveAnim {
+  from { height: 10%; }
+  to { height: 90%; }
+}
+
+/* ===== BOOKING ===== */
+.booking-layout { display: grid; gap: 40px; max-width: 1000px; margin: 0 auto; }
+@media (min-width: 768px) { .booking-layout { grid-template-columns: 1fr 1fr; } }
+.booking-form { background: var(--bg-card); border-radius: var(--radius-xl); padding: 28px; border: 1px solid var(--border); }
+.booking-form .field { margin-bottom: 16px; }
+.booking-form label { display: block; font-size: 13px; font-weight: 600; color: var(--text-muted); margin-bottom: 5px; }
+.booking-form input, .booking-form select, .booking-form textarea {
+  width: 100%; padding: 12px 14px; background: var(--bg-elevated);
+  border: 1px solid var(--border); border-radius: 10px; color: var(--text);
+  font-family: var(--font); font-size: 14px; transition: border-color 0.25s ease;
+}
+.booking-form input:focus, .booking-form select:focus, .booking-form textarea:focus {
+  outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-glow);
+}
+.booking-form textarea { resize: vertical; min-height: 80px; }
+.booking-form button[type="submit"] {
+  width: 100%; padding: 14px; background: var(--primary); color: #fff;
+  border: none; border-radius: 10px; font-family: var(--font);
+  font-size: 15px; font-weight: 700; cursor: pointer;
+  transition: all 0.3s var(--ease-out);
+}
+.booking-form button[type="submit"]:hover { background: var(--primary-soft); transform: translateY(-1px); box-shadow: 0 8px 24px var(--primary-glow); }
+.booking-login-msg {
+  text-align: center; padding: 60px 40px; background: var(--bg-card);
+  border: 1px solid var(--border); border-radius: var(--radius-xl);
+}
+.booking-login-msg p { color: var(--text-muted); margin-bottom: 20px; }
+.user-bookings { margin-top: 24px; }
+.booking-card {
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg);
+  padding: 16px 20px; margin-bottom: 10px;
+  display: flex; justify-content: space-between; align-items: center; gap: 16px;
+}
+@media (max-width: 768px) { .booking-card { flex-direction: column; align-items: stretch; } }
+.booking-card-info h4 { font-size: 15px; font-weight: 600; }
+.booking-card-info p { font-size: 13px; color: var(--text-muted); }
+.booking-card-status { font-size: 12px; font-weight: 600; padding: 4px 12px; border-radius: 20px; }
+.booking-card-status.confirmed { background: rgba(34,197,94,0.12); color: var(--success); }
+.booking-card-status.pending { background: rgba(139,92,246,0.12); color: var(--primary-soft); }
+.booking-card-status.cancelled { background: rgba(239,68,68,0.12); color: var(--danger); }
+.booking-card-actions { display: flex; gap: 8px; }
+.booking-card-actions button {
+  padding: 6px 14px; border-radius: 6px; border: none; font-family: var(--font);
+  font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.25s ease;
+}
+.btn-cancel-booking { background: transparent; border: 1px solid var(--border) !important; color: var(--text-muted); }
+.btn-cancel-booking:hover { border-color: var(--danger) !important; color: var(--danger); }
+
+/* ===== ADMIN ===== */
+#adminPanel { background: linear-gradient(180deg, var(--bg-elevated), var(--bg-deep)); }
+.admin-tabs { display: flex; gap: 4px; justify-content: center; margin-bottom: 32px; flex-wrap: wrap; }
+.admin-tab {
+  padding: 8px 20px; border-radius: 8px; font-size: 13px; font-weight: 600;
+  background: var(--bg-card); color: var(--text-muted);
+  border: 1px solid var(--border); cursor: pointer; font-family: var(--font);
+  transition: all 0.25s var(--ease-out);
+}
+.admin-tab:hover { border-color: var(--primary); color: var(--primary-soft); }
+.admin-tab.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+.admin-section { display: none; }
+.admin-section.active { display: block; }
+.admin-toolbar { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+.admin-toolbar button, .admin-toolbar a {
+  padding: 8px 18px; border-radius: 8px; font-family: var(--font);
+  font-size: 13px; font-weight: 600; border: none; cursor: pointer;
+  transition: all 0.25s var(--ease-out); text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
+}
+.admin-btn-add { background: var(--primary); color: #fff; }
+.admin-btn-add:hover { background: var(--primary-soft); transform: translateY(-1px); }
+.admin-btn-edit { background: rgba(34,211,238,0.12); color: var(--accent); border: 1px solid rgba(34,211,238,0.2) !important; }
+.admin-btn-edit:hover { background: rgba(34,211,238,0.2); }
+.admin-btn-danger { background: rgba(239,68,68,0.12); color: var(--danger); border: 1px solid rgba(239,68,68,0.2) !important; }
+.admin-btn-danger:hover { background: rgba(239,68,68,0.2); }
+.admin-search {
+  flex: 1; min-width: 150px; padding: 8px 14px; background: var(--bg-card);
+  border: 1px solid var(--border); border-radius: 8px; color: var(--text);
+  font-family: var(--font); font-size: 13px;
+}
+.admin-search:focus { outline: none; border-color: var(--primary); }
+.admin-select {
+  padding: 8px 14px; background: var(--bg-card);
+  border: 1px solid var(--border); border-radius: 8px; color: var(--text);
+  font-family: var(--font); font-size: 13px;
+}
+.admin-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: var(--radius); border: 1px solid var(--border); }
+.admin-table { width: 100%; border-collapse: collapse; background: var(--bg-card); min-width: 600px; }
+.admin-table th, .admin-table td { padding: 10px 14px; text-align: right; font-size: 13px; border-bottom: 1px solid var(--border); }
+.admin-table th { background: rgba(255,255,255,0.03); color: var(--text-muted); font-weight: 600; }
+.admin-table td { color: var(--text); }
+.admin-table tr:last-child td { border-bottom: none; }
+.admin-table .actions { display: flex; gap: 6px; }
+.admin-table .actions button { padding: 4px 10px; border-radius: 4px; border: none; font-family: var(--font); font-size: 12px; cursor: pointer; transition: all 0.25s ease; }
+
+/* ===== MODAL ===== */
+.modal-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.7); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  z-index: 5000; align-items: center; justify-content: center; padding: 20px;
+}
+.modal-overlay.active { display: flex; }
+.modal {
+  background: var(--bg-glass); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
+  border-radius: var(--radius-xl); border: 1px solid var(--border-light);
+  width: 100%; max-width: 480px; position: relative;
+  animation: modalIn 0.35s var(--ease); max-height: 90vh; overflow-y: auto;
+}
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.92) translateY(20px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+.modal-close {
+  position: absolute; top: 12px; left: 12px; width: 36px; height: 36px;
+  background: rgba(255,255,255,0.06); border: none; border-radius: 50%;
+  color: var(--text-muted); font-size: 18px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.25s ease; z-index: 10;
+}
+.modal-close:hover { background: rgba(255,255,255,0.12); color: var(--text); }
+.modal-body { padding: 32px 24px 24px; }
+.modal-body h3 { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+.modal-body > p { font-size: 14px; color: var(--text-muted); margin-bottom: 20px; }
+.auth-form .field { margin-bottom: 14px; }
+.auth-form label { display: block; font-size: 13px; font-weight: 600; color: var(--text-muted); margin-bottom: 5px; }
+.auth-form input, .auth-form select {
+  width: 100%; padding: 12px 14px; background: var(--bg-elevated);
+  border: 1px solid var(--border); border-radius: 10px; color: var(--text);
+  font-family: var(--font); font-size: 14px; transition: border-color 0.25s ease;
+}
+.auth-form input:focus, .auth-form select:focus {
+  outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-glow);
+}
+.announce-modal .modal { max-width: 560px; }
+.announce-modal .modal-body { padding: 36px 28px 28px; }
+.announce-header { text-align: center; margin-bottom: 24px; }
+.announce-header h3 { font-size: 24px; background: linear-gradient(135deg,var(--primary),#a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.announce-header p { font-size: 14px; color: var(--text-muted); margin-top: 4px; }
+.announce-list { list-style: none; padding: 0; margin: 0 0 24px; }
+.announce-list li {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 12px 14px; border-radius: 10px;
+  background: rgba(255,255,255,0.03); margin-bottom: 8px;
+  font-size: 14px; line-height: 1.5;
+}
+.announce-list li .badge {
+  display: inline-block; padding: 1px 8px; border-radius: 6px;
+  font-size: 11px; font-weight: 700; white-space: nowrap;
+  height: 20px; line-height: 18px; flex-shrink: 0;
+}
+.badge-p0 { background: #ef4444; color: #fff; }
+.badge-p1 { background: #f59e0b; color: #000; }
+.badge-p2 { background: #3b82f6; color: #fff; }
+.announce-list li .text { flex: 1; }
+.announce-footer { text-align: center; }
+.announce-footer button {
+  padding: 12px 32px; background: var(--primary); color: #fff;
+  border: none; border-radius: 12px; font-size: 15px; font-weight: 600;
+  cursor: pointer; transition: all 0.25s var(--ease-out);
+}
+.announce-footer button:hover { background: var(--primary-soft); transform: translateY(-1px); }
+.auth-form button {
+  width: 100%; padding: 14px; background: var(--primary); color: #fff;
+  border: none; border-radius: 10px; font-family: var(--font);
+  font-size: 15px; font-weight: 700; cursor: pointer;
+  transition: all 0.3s var(--ease-out); margin-top: 6px;
+}
+.auth-form button:hover { background: var(--primary-soft); transform: translateY(-1px); box-shadow: 0 8px 24px var(--primary-glow); }
+.auth-form .auth-toggle { text-align: center; margin-top: 14px; font-size: 13px; color: var(--text-muted); }
+.auth-form .auth-toggle a { color: var(--primary-soft); text-decoration: none; cursor: pointer; font-weight: 600; }
+.auth-form .auth-toggle a:hover { text-decoration: underline; }
+.auth-form .error-msg { color: var(--danger); font-size: 13px; text-align: center; margin-bottom: 10px; display: none; }
+.modal-platform-links { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+
+/* ===== TOAST ===== */
+.toast {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(100px);
+  background: var(--bg-glass); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-light); border-radius: 12px;
+  padding: 14px 28px; font-size: 14px; font-weight: 500; color: var(--text);
+  z-index: 9999; opacity: 0; transition: all 0.4s var(--ease); pointer-events: none;
+  white-space: nowrap;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+.toast.success { border-color: var(--success); }
+.toast.error { border-color: var(--danger); }
+
+/* ===== FOOTER ===== */
+footer {
+  position: relative; z-index: 2; border-top: 1px solid var(--border);
+  padding: 32px 20px; text-align: center;
+}
+footer p { font-size: 13px; color: var(--text-dim); }
+footer .footer-brand { font-weight: 700; color: var(--text-muted); font-size: 16px; margin-bottom: 4px; }
+footer .footer-brand span { color: var(--primary); }
+
+/* ===== SCROLL REVEAL ===== */
+.reveal { opacity: 0; transform: translateY(30px); transition: all 0.7s var(--ease); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .song-card-actions { flex-direction: column; }
+  .song-card-actions button, .song-card-actions a { width: 100%; }
+  .booking-card-actions { justify-content: flex-start; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .splash { animation: none !important; opacity: 0 !important; visibility: hidden !important; }
+  .ambient-blob, .vis-bar, .studio-visual-wave span { animation: none !important; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  .reveal { opacity: 1 !important; transform: none !important; }
+}
+
+/* ===== LANG SWITCHER ===== */
+.lang-btn { width:40px;height:40px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.06);color:var(--text-muted);transition:all 0.25s var(--ease-out);font-family:var(--font);font-size:13px;font-weight:700;padding:0; }
+.lang-btn:hover { background:var(--primary);color:#fff;transform:scale(1.05); }
+.lang-btn:active { transform:scale(0.95); }
+[dir=ltr] .lang-btn { font-weight:600; }
+[dir=ltr] { direction:ltr; }
+[dir=ltr] body { text-align:left; }
+[dir=ltr] .modal-body h3, [dir=ltr] .section-header, [dir=ltr] .hero-left { text-align:left; }
+[dir=ltr] .booking-form label, [dir=ltr] .auth-form label, [dir=ltr] .studio-info h3, [dir=ltr] .studio-feature { text-align:left; }
+[dir=ltr] .admin-table th, [dir=ltr] .admin-table td { text-align:left; }
+
+/* ===== SOCIAL LOGIN ===== */
+.social-divider { display:flex;align-items:center;gap:12px;margin:16px 0; }
+.social-divider::before,.social-divider::after { content:'';flex:1;height:1px;background:var(--border); }
+.social-divider span { font-size:12px;color:var(--text-dim);white-space:nowrap; }
+.social-btns { display:flex;gap:10px; }
+.social-btn { flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;border-radius:10px;border:1px solid var(--border);background:var(--bg-elevated);color:var(--text);font-family:var(--font);font-size:14px;font-weight:600;cursor:pointer;transition:all 0.25s ease; }
+.social-btn:hover { border-color:var(--primary);background:var(--bg-card); }
+.social-btn svg { width:18px;height:18px;flex-shrink:0; }
+
+/* ===== MEDIA SECTION ===== */
+.media-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px; }
+@media(max-width:768px){.media-grid{grid-template-columns:1fr 1fr;gap:12px;}}
+@media(max-width:480px){.media-grid{grid-template-columns:1fr;}}
+.media-card { background:var(--bg-card);border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--border);cursor:pointer;transition:transform 0.4s var(--ease-out),box-shadow 0.4s var(--ease-out); }
+.media-card:hover { transform:translateY(-4px);box-shadow:0 20px 60px rgba(0,0,0,0.3);border-color:rgba(139,92,246,0.3); }
+.media-card-thumb { position:relative;width:100%;padding-top:56.25%;background:var(--bg-elevated);overflow:hidden; }
+.media-card-thumb img,.media-card-thumb video { position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover; }
+.media-card-thumb .play-overlay { position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.5);opacity:0;transition:opacity 0.3s ease; }
+.media-card:hover .play-overlay { opacity:1; }
+.media-card-body { padding:14px 16px; }
+.media-card-body h4 { font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+.media-card-body p { font-size:11px;color:var(--text-dim);margin-top:2px; }
+.media-type-badge { position:absolute;top:8px;z-index:3;padding:3px 8px;border-radius:6px;font-size:10px;font-weight:700;background:rgba(0,0,0,0.6);color:var(--text); }
+[dir="rtl"] .media-type-badge { right:8px; }
+[dir="ltr"] .media-type-badge { left:8px; }
+
+/* ===== ARTISTS ===== */
+.artists-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:20px; }
+@media(max-width:768px){.artists-grid{grid-template-columns:repeat(3,1fr);gap:12px;}}
+@media(max-width:480px){.artists-grid{grid-template-columns:repeat(2,1fr);}}
+.artist-card { text-align:center;padding:24px 16px;background:var(--bg-card);border-radius:var(--radius-xl);border:1px solid var(--border);cursor:pointer;transition:all 0.3s var(--ease-out); }
+.artist-card:hover { transform:translateY(-4px);border-color:var(--primary);box-shadow:0 12px 40px var(--primary-glow); }
+.artist-avatar { width:80px;height:80px;border-radius:50%;margin:0 auto 12px;background:var(--bg-elevated);overflow:hidden;border:2px solid var(--border);transition:border-color 0.3s ease; }
+.artist-card:hover .artist-avatar { border-color:var(--primary); }
+.artist-avatar img { width:100%;height:100%;object-fit:cover; }
+.artist-card h4 { font-size:15px;font-weight:700; }
+.artist-card p { font-size:12px;color:var(--text-dim);margin-top:4px; }
+
+/* ===== SERVICES ===== */
+.services-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px; }
+@media(max-width:768px){.services-grid{grid-template-columns:1fr 1fr;gap:12px;}}
+@media(max-width:480px){.services-grid{grid-template-columns:1fr;}}
+.service-card { background:var(--bg-card);border-radius:var(--radius-xl);padding:28px 24px;border:1px solid var(--border);text-align:center;transition:all 0.3s var(--ease-out);position:relative;overflow:hidden; }
+.service-card:hover { transform:translateY(-4px);border-color:var(--primary);box-shadow:0 12px 40px var(--primary-glow); }
+.service-card.featured { border-color:var(--secondary); }
+.service-card.featured::before { content:'الأكثر طلباً';position:absolute;top:12px;right:12px;padding:3px 10px;border-radius:20px;background:var(--secondary);color:#000;font-size:10px;font-weight:700; }
+.service-card .icon { width:48px;height:48px;margin:0 auto 14px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--primary-glow);font-size:22px; }
+.service-card h4 { font-size:16px;font-weight:700;margin-bottom:8px; }
+.service-card p { font-size:13px;color:var(--text-muted);line-height:1.7;margin-bottom:14px; }
+.service-card .price { font-size:24px;font-weight:800;color:var(--primary); }
+.service-card .price small { font-size:14px;font-weight:400;color:var(--text-dim); }
+.service-card .discount-badge { display:inline-block;padding:2px 8px;border-radius:4px;background:rgba(239,68,68,0.15);color:var(--danger);font-size:11px;font-weight:700;margin-top:8px; }
+
+/* ===== REVIEWS ===== */
+.reviews-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px; }
+@media(max-width:768px){.reviews-grid{grid-template-columns:1fr;}}
+.review-card { background:var(--bg-card);border-radius:var(--radius-lg);padding:20px 24px;border:1px solid var(--border);transition:border-color 0.3s ease; }
+.review-card:hover { border-color:rgba(139,92,246,0.3); }
+.review-card .stars { color:var(--secondary);font-size:16px;margin-bottom:6px; }
+.review-card blockquote { font-size:14px;color:var(--text-muted);line-height:1.7;font-style:italic;margin-bottom:10px; }
+.review-card .author { display:flex;align-items:center;gap:10px; }
+.review-card .author img { width:32px;height:32px;border-radius:50%;object-fit:cover;background:var(--bg-elevated); }
+.review-card .author strong { font-size:13px;font-weight:700; }
+.review-card .author small { font-size:12px;color:var(--text-dim); }
+
+/* ===== LOCATION MAP ===== */
+.map-container { border-radius:var(--radius-xl);overflow:hidden;border:1px solid var(--border);min-height:300px;background:var(--bg-card);position:relative; }
+.map-container iframe { width:100%;height:100%;border:0;min-height:300px; }
+.map-coords { display:flex;gap:12px;align-items:center;justify-content:center;margin-top:12px;flex-wrap:wrap; }
+.map-coords span { font-size:12px;color:var(--text-dim); }
+
+/* ===== SONG REQUEST ===== */
+.request-form textarea { width:100%;padding:12px 14px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:10px;color:var(--text);font-family:var(--font);font-size:14px;resize:vertical;min-height:80px;transition:border-color 0.25s ease; }
+.request-form textarea:focus { outline:none;border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-glow); }
+
+/* ===== ARTIST PROFILE MODAL ===== */
+.artist-profile-header { text-align:center;padding:20px 0; }
+.artist-profile-header img { width:100px;height:100px;border-radius:50%;object-fit:cover;margin-bottom:12px;border:3px solid var(--primary); }
+.artist-profile-header h3 { font-size:22px;font-weight:700; }
+.artist-profile-header p { font-size:14px;color:var(--text-muted); }
+.artist-social-links { display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:16px 0; }
+.artist-social-links a { display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;border:1px solid var(--border);color:var(--text-muted);text-decoration:none;font-size:13px;font-weight:600;transition:all 0.25s ease; }
+.artist-social-links a:hover { border-color:var(--primary);color:var(--primary); }
+.artist-songs-list { display:flex;flex-direction:column;gap:8px;margin-top:16px; }
+.artist-song-item { display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--bg-elevated);border-radius:10px;cursor:pointer;transition:background 0.25s ease; }
+.artist-song-item:hover { background:var(--bg-card); }
+.artist-song-item img { width:40px;height:24px;object-fit:cover;border-radius:4px; }
+.artist-song-item span { font-size:13px;font-weight:500;flex:1; }
+
+/* ===== ADMIN TEXT EDIT ===== */
+.editable-text { cursor:pointer;border-radius:4px;transition:all 0.2s ease;position:relative; }
+.editable-text:hover { background:rgba(139,92,246,0.05); }
+.editable-text:focus { outline:2px dashed var(--primary);outline-offset:4px;background:rgba(139,92,246,0.08); }
+.editable-text[contenteditable]:hover::after { content:'✎';position:absolute;top:-12px;right:-12px;font-size:12px;color:var(--primary);background:var(--bg-glass);padding:2px 6px;border-radius:4px;border:1px solid var(--border); }
+.admin-text-toolbar { display:flex;gap:8px;justify-content:center;margin-bottom:16px;flex-wrap:wrap; }
+.admin-text-toolbar button { padding:6px 16px;border-radius:8px;border:1px solid var(--border);background:var(--bg-card);color:var(--text-muted);font-family:var(--font);font-size:12px;font-weight:600;cursor:pointer;transition:all 0.25s ease; }
+.admin-text-toolbar button:hover { border-color:var(--primary);color:var(--primary); }
+.admin-text-toolbar button.active { background:var(--primary);color:#fff;border-color:var(--primary); }
+
+/* ===== BOOKING TIME SLOTS ===== */
+.time-slots { display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px;margin:12px 0; }
+.time-slot { padding:8px;border-radius:8px;border:1px solid var(--border);text-align:center;font-size:12px;font-weight:600;cursor:pointer;background:var(--bg-elevated);color:var(--text);transition:all 0.2s ease; }
+.time-slot:hover { border-color:var(--primary); }
+.time-slot.selected { background:var(--primary);color:#fff;border-color:var(--primary); }
+.time-slot.booked { opacity:0.3;cursor:not-allowed;background:var(--bg-deep);border-color:var(--border);pointer-events:none; }
+.time-slot.booked::after { content:' (محجوز)';font-size:8px;color:var(--danger);display:block; }
+</style>
+</head>
+<body>
+
+<div class="ambient-blob"></div>
+<div class="ambient-blob"></div>
+<div class="ambient-blob"></div>
+
+<div id="scrollProgress"><span></span></div>
+
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- SPLASH -->
+<div class="splash" id="splash">
+  <div class="splash-content">
+    <div class="splash-particles" id="splashParticles"></div>
+    <div class="splash-logo"><span>♪</span> Bu Kitchen</div>
+    <div class="splash-sub">استوديو تسجيل احترافي</div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo"><span>♪</span> Bu Kitchen</a>
+  <div class="nav-actions">
+    <button class="lang-btn" id="langToggle" title="English">EN</button>
+    <button class="nav-auth-btn" id="navLoginBtn">تسجيل الدخول</button>
+    <button class="nav-auth-btn hidden" id="navLogoutBtn">تسجيل الخروج</button>
+    <button class="nav-btn" id="navMenu" aria-label="القائمة" style="font-size:20px;font-weight:700;line-height:1;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+  </div>
+</nav>
+
+<!-- MENU OVERLAY -->
+<div class="menu-overlay" id="menuOverlay"></div>
+
+<!-- MENU -->
+<div class="menu-panel" id="menuPanel">
+  <nav>
+    <a href="#songs" onclick="closeMenu()"><i>♪</i> الأغاني</a>
+    <a href="#media" onclick="closeMenu()"><i>▶</i> أعمالنا</a>
+    <a href="#artists" onclick="closeMenu()"><i>👤</i> الفنانون</a>
+    <a href="#services" onclick="closeMenu()"><i>★</i> الخدمات والأسعار</a>
+    <a href="#studio" onclick="closeMenu()"><i>⏻</i> الاستوديو</a>
+    <a href="#booking" onclick="closeMenu()"><i>✧</i> الحجز</a>
+    <a href="#" id="menuMyBookings" class="hidden" onclick="closeMenu();document.getElementById('booking').scrollIntoView({behavior:'smooth'});"><i>◈</i> حجوزاتي</a>
+    <a href="#reviews" onclick="closeMenu()"><i>💬</i> التقييمات</a>
+    <a href="#map" onclick="closeMenu()"><i>📍</i> موقعنا</a>
+    <a href="#" id="menuRequestSong" class="hidden"><i>🎤</i> طلب إضافة أغنية</a>
+    <a href="admin.html" id="menuAdminPanel" class="hidden"><i>⚙</i> لوحة التحكم</a>
+    <div class="menu-divider"></div>
+    <button id="menuLoginBtn"><i>⌂</i> تسجيل الدخول</button>
+    <button id="menuLogoutBtn" class="hidden"><i>⌂</i> تسجيل الخروج</button>
+  </nav>
+  <div class="menu-user">
+    <span id="menuUserName" class="hidden"></span>
+    <small>Bu Kitchen Studio</small>
+    <a href="mailto:info@bukitchen.com" class="menu-email">info@bukitchen.com</a>
+    <div class="menu-socials">
+      <a href="#">Anghami</a>
+      <a href="#">Spotify</a>
+      <a href="#">Instagram</a>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-grid">
+    <div class="hero-left">
+      <div class="hero-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+        الإسكندرية، مصر
+      </div>
+      <h1 class="hero-title">مطبخك <span>الموسيقي</span><br>احتراف بلا حدود</h1>
+      <p class="hero-sub">تسجيل، إنتاج، مكساج وماسترنج بأحدث المعدات الصوتية. خبرة +10 سنوات في صناعة الموسيقى. الإسكندرية، مصر.</p>
+      <div class="hero-cta">
+        <button class="btn-primary" onclick="document.getElementById('songs').scrollIntoView({behavior:'smooth'})">
+          اكتشف الأغاني
+          <svg width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 13L13 5M13 5H6M13 5V12"/></svg>
+        </button>
+        <a href="#booking" class="btn-secondary">
+          احجز الآن
+        </a>
+      </div>
+    </div>
+    <div class="hero-visualizer" id="visualizer">
+      <div class="vis-glow"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Songs -->
+<section id="songs">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <h2>الأغاني <span>المنتجة</span></h2>
+      <div class="line"></div>
+      <p>إنتاجات Bu Kitchen الموسيقية</p>
+    </div>
+    <div class="cat-pills" id="catPills"></div>
+    <div class="songs-grid" id="songsGrid"></div>
+  </div>
+</section>
+
+<!-- Media Gallery -->
+<section id="media" style="background:linear-gradient(180deg,var(--bg-elevated),var(--bg));">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <h2>أعمال <span>نا</span></h2>
+      <div class="line"></div>
+      <p>فيديوهات وصوتيات من جلسات التجهيز والإنتاج</p>
+    </div>
+    <div class="media-grid" id="mediaGrid"></div>
+  </div>
+</section>
+
+<!-- Artists -->
+<section id="artists">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <h2>الفنانون <span>معنا</span></h2>
+      <div class="line"></div>
+      <p>تعرف على الفنانين المسجلين في Bu Kitchen</p>
+    </div>
+    <div class="artists-grid" id="artistsGrid"></div>
+  </div>
+</section>
+
+<!-- Services & Pricing -->
+<section id="services" style="background:linear-gradient(180deg,var(--bg-elevated),var(--bg));">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <h2>الخدمات <span>والأسعار</span></h2>
+      <div class="line"></div>
+      <p>باقاتنا المتنوعة لتلبية احتياجاتك الموسيقية</p>
+    </div>
+    <div class="services-grid" id="servicesGrid"></div>
+  </div>
+</section>
+
+<!-- Studio -->
+<section id="studio">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <h2>عن <span>الاستوديو</span></h2>
+      <div class="line"></div>
+      <p>مطبخك الموسيقي المتكامل</p>
+    </div>
+    <div class="studio-grid">
+      <div class="studio-info reveal">
+        <h3 class="editable-text" data-text-key="studioTitle">Bu Kitchen Studio</h3>
+        <p class="editable-text" data-text-key="studioDesc">استوديو تسجيل احترافي في الإسكندرية، مصر. مجهز بأحدث المعدات الصوتية. نقدم خدمات التسجيل، الإنتاج الموسيقي، المكساج، والماسترنج.</p>
+        <div class="studio-features">
+          <div class="studio-feature">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+            معدات تسجيل احترافية
+          </div>
+          <div class="studio-feature">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round"><path d="M12 2v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/></svg>
+            مهندس صوت خبرة +10 سنوات
+          </div>
+          <div class="studio-feature">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+            عازفون وجلسات حية
+          </div>
+          <div class="studio-feature">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round"><path d="M12 1v2"/><path d="M12 21v2"/><path d="M4.22 4.22l1.42 1.42"/><path d="M18.36 18.36l1.42 1.42"/><path d="M1 12h2"/><path d="M21 12h2"/><path d="M4.22 19.78l1.42-1.42"/><path d="M18.36 5.64l1.42-1.42"/></svg>
+            أسعار تنافسية وجودة عالمية
+          </div>
+        </div>
+      </div>
+      <div class="studio-visual reveal">
+        <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.2" stroke-linecap="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+        <div class="studio-visual-wave" id="studioWave"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Booking -->
+<section id="booking">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <h2>احجز <span>الاستوديو</span></h2>
+      <div class="line"></div>
+      <p>احجز جلستك في Bu Kitchen</p>
+    </div>
+    <div class="booking-layout">
+      <div id="bookingContent" class="reveal"></div>
+      <div class="reveal">
+        <div class="booking-form" style="background:var(--bg-card);border-radius:var(--radius-xl);padding:28px;border:1px solid var(--border);">
+          <h3 style="font-size:18px;font-weight:700;margin-bottom:16px;">لماذا Bu Kitchen؟</h3>
+          <div class="studio-features">
+            <div class="studio-feature"><svg viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>ضمان الجودة العالية</div>
+            <div class="studio-feature"><svg viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>مرونة في المواعيد</div>
+            <div class="studio-feature"><svg viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>بيئة آمنة ومريحة</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="user-bookings" id="userBookings"></div>
+  </div>
+</section>
+
+<!-- Reviews -->
+<section id="reviews" style="background:linear-gradient(180deg,var(--bg),var(--bg-elevated));">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <h2>تقييمات <span>العملاء</span></h2>
+      <div class="line"></div>
+      <p>ماذا يقول عنا عملاؤنا</p>
+    </div>
+    <div style="text-align:center;margin-bottom:32px;">
+      <button class="btn-primary" id="addReviewBtn" style="display:inline-flex;">أضف تقييمك</button>
+    </div>
+    <div class="reviews-grid" id="reviewsGrid"></div>
+  </div>
+</section>
+
+<!-- Map -->
+<section id="map">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <h2>موقع <span>الاستوديو</span></h2>
+      <div class="line"></div>
+      <p>تفضل بزيارتنا في الإسكندرية</p>
+    </div>
+    <div class="map-container reveal" id="mapContainer"></div>
+    <div class="map-coords" id="mapCoords"></div>
+  </div>
+</section>
+
+<!-- Admin Panel -->
+<section id="adminPanel" class="hidden">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <h2>لوحة <span>التحكم</span></h2>
+      <div class="line"></div>
+      <p>إدارة الأغاني، التصنيفات، الحجوزات، والمستخدمين</p>
+    </div>
+    <div class="admin-tabs" id="adminTabs">
+      <button class="admin-tab active" data-tab="tabSongs">الأغاني</button>
+      <button class="admin-tab" data-tab="tabCategories">التصنيفات</button>
+      <button class="admin-tab" data-tab="tabRequests">طلبات الأغاني</button>
+      <button class="admin-tab" data-tab="tabServices">الخدمات</button>
+      <button class="admin-tab" data-tab="tabReviews">التقييمات</button>
+      <button class="admin-tab" data-tab="tabMedia">أعمالنا</button>
+      <button class="admin-tab" data-tab="tabBookings">الحجوزات</button>
+      <button class="admin-tab" data-tab="tabUsers">المستخدمين</button>
+    </div>
+    <div class="admin-panel-content">
+      <div class="admin-section active" id="tabSongs">
+        <div class="admin-toolbar">
+          <button class="admin-btn-add" id="adminAddSong">+ إضافة أغنية</button>
+          <input type="text" class="admin-search" id="adminSearchSongs" placeholder="بحث في الأغاني...">
+        </div>
+        <div id="adminSongsList"></div>
+      </div>
+      <div class="admin-section" id="tabCategories">
+        <div class="admin-toolbar">
+          <button class="admin-btn-add" id="adminAddCategory">+ إضافة تصنيف</button>
+        </div>
+        <div id="adminCategoriesList"></div>
+      </div>
+      <div class="admin-section" id="tabBookings">
+        <div class="admin-toolbar">
+          <select class="admin-select" id="adminBookingFilter">
+            <option value="all">كل الحجوزات</option>
+            <option value="pending">قيد الانتظار</option>
+            <option value="confirmed">مؤكدة</option>
+            <option value="cancelled">ملغية</option>
+          </select>
+        </div>
+        <div id="adminBookingsList"></div>
+      </div>
+      <div class="admin-section" id="tabRequests">
+        <div class="admin-toolbar"><span style="color:var(--text-muted);font-size:14px;">إدارة طلبات إضافة الأغاني من المستخدمين</span></div>
+        <div id="adminRequestsList"></div>
+      </div>
+      <div class="admin-section" id="tabServices">
+        <div class="admin-toolbar">
+          <button class="admin-btn-add" id="adminAddService">+ إضافة خدمة</button>
+        </div>
+        <div id="adminServicesList"></div>
+      </div>
+      <div class="admin-section" id="tabReviews">
+        <div class="admin-toolbar">
+          <select class="admin-select" id="adminReviewFilter">
+            <option value="all">كل التقييمات</option>
+            <option value="pending">قيد المراجعة</option>
+            <option value="approved">منشورة</option>
+          </select>
+        </div>
+        <div id="adminReviewsList"></div>
+      </div>
+      <div class="admin-section" id="tabMedia">
+        <div class="admin-toolbar">
+          <button class="admin-btn-add" id="adminAddMedia">+ إضافة مقطع</button>
+        </div>
+        <div id="adminMediaList"></div>
+      </div>
+      <div class="admin-section" id="tabUsers">
+        <div id="adminUsersList"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <p class="footer-brand"><span>♪</span> Bu Kitchen</p>
+  <p>&copy; 2026 Bu Kitchen Studio. جميع الحقوق محفوظة.</p>
+</footer>
+
+<!-- Login Modal -->
+<div class="modal-overlay" id="loginModal">
+  <div class="modal">
+    <button class="modal-close" id="loginClose" aria-label="إغلاق">✕</button>
+    <div class="modal-body">
+      <h3>تسجيل الدخول</h3>
+      <p>ادخل بياناتك للدخول إلى حسابك</p>
+      <div class="social-btns" style="margin-bottom:16px;">
+        <button class="social-btn" id="googleLogin">
+          <svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          Google
+        </button>
+      </div>
+      <div class="social-divider"><span>أو</span></div>
+      <form class="auth-form" id="loginForm">
+        <div class="error-msg" id="loginError"></div>
+        <div class="field">
+          <label>البريد الإلكتروني أو اسم المستخدم</label>
+          <input type="text" id="loginEmail" placeholder="admin@bukitchen.com" dir="ltr" required>
+        </div>
+        <div class="field">
+          <label>كلمة المرور</label>
+          <input type="password" id="loginPassword" placeholder="••••••••" dir="ltr" required>
+        </div>
+        <button type="submit">دخول</button>
+        <div class="auth-toggle">ما عندك حساب؟ <a id="showRegister">سجّل الآن</a></div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Register Modal -->
+<div class="modal-overlay" id="registerModal">
+  <div class="modal">
+    <button class="modal-close" id="registerClose" aria-label="إغلاق">✕</button>
+    <div class="modal-body">
+      <h3>إنشاء حساب</h3>
+      <p>سجّل الآن لحجز جلسات الاستوديو</p>
+      <div class="social-btns" style="margin-bottom:16px;">
+        <button class="social-btn" id="googleRegister">
+          <svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          Google
+        </button>
+      </div>
+      <div class="social-divider"><span>أو</span></div>
+      <form class="auth-form" id="registerForm">
+        <div class="error-msg" id="registerError"></div>
+        <div class="field">
+          <label>الاسم الكامل</label>
+          <input type="text" id="regName" placeholder="محمد أحمد" required>
+        </div>
+        <div class="field">
+          <label>اسم المستخدم</label>
+          <input type="text" id="regUsername" placeholder="mohamed_ahmed" dir="ltr" required>
+        </div>
+        <div class="field">
+          <label>البريد الإلكتروني</label>
+          <input type="email" id="regEmail" placeholder="user@example.com" dir="ltr" required>
+        </div>
+        <div class="field">
+          <label>رقم الهاتف</label>
+          <input type="tel" id="regPhone" placeholder="+20 10 0000 0000" dir="ltr" required>
+        </div>
+        <div class="field">
+          <label>كلمة المرور</label>
+          <input type="password" id="regPassword" placeholder="•••••••• (6 أحرف على الأقل)" dir="ltr" required minlength="6">
+        </div>
+        <button type="submit">تسجيل</button>
+        <div class="auth-toggle">عندك حساب؟ <a id="showLogin">سجّل دخول</a></div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Add Song Modal -->
+<div class="modal-overlay" id="addSongModal">
+  <div class="modal" style="max-width:550px;">
+    <button class="modal-close" id="addSongClose" aria-label="إغلاق">✕</button>
+    <div class="modal-body">
+      <h3>إضافة أغنية</h3>
+      <p>أضف أغنية جديدة إلى القائمة</p>
+      <form class="auth-form" id="addSongForm">
+        <div class="field">
+          <label>رابط يوتيوب</label>
+          <input type="text" id="adminSongUrl" placeholder="https://youtube.com/watch?v=..." dir="ltr" required>
+        </div>
+        <div class="field">
+          <label>اسم الأغنية</label>
+          <input type="text" id="adminSongTitle" placeholder="اسم الأغنية">
+        </div>
+        <div class="field">
+          <label>الفنان (اختياري)</label>
+          <select id="adminSongArtist"></select>
+        </div>
+        <div class="field">
+          <label>التصنيف</label>
+          <select id="adminSongCategory" style="width:100%;padding:12px 14px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:10px;color:var(--text);font-family:var(--font);font-size:14px;"></select>
+        </div>
+        <div style="border-top:1px solid var(--border);margin:16px 0 12px;padding-top:14px;">
+          <p style="font-size:13px;font-weight:600;color:var(--text-muted);margin-bottom:10px;">روابط استماع إضافية (اختياري)</p>
+          <div class="field">
+            <label style="display:flex;align-items:center;gap:6px;color:var(--text-muted);"><svg width="14" height="14" viewBox="0 0 24 24" fill="#1db954"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg> سبوتيفاي</label>
+            <input type="text" id="adminSongSpotify" placeholder="https://open.spotify.com/track/..." dir="ltr">
+          </div>
+          <div class="field">
+            <label style="display:flex;align-items:center;gap:6px;color:var(--text-muted);"><svg width="14" height="14" viewBox="0 0 24 24" fill="#f50"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 15.219c-.249.414-.788.537-1.213.267-1.16-.714-2.68-1.096-4.214-.98-1.506.112-2.806.595-3.446 1.035-.41.274-.96.178-1.216-.232-.256-.41-.136-.939.286-1.199.818-.563 2.366-1.144 4.144-1.279 1.826-.142 3.583.308 5.04 1.21.443.278.573.875.32 1.299zm1.476-2.887c-.314.466-.94.601-1.398.278-1.506-.946-3.472-1.493-5.654-1.338-2.118.154-3.879.833-4.693 1.338a.993.993 0 01-1.393-.251.986.986 0 01.248-1.382c1.097-.699 3.144-1.494 5.569-1.673 2.496-.187 4.758.456 6.513 1.606.466.302.59.927.31 1.394zm.127-3.016c-.393.52-1.12.637-1.624.253-1.715-1.149-4.086-1.686-6.61-1.544-2.443.142-4.447.9-5.357 1.512a1.17 1.17 0 01-1.602-.293 1.18 1.18 0 01.283-1.608c1.153-.792 3.46-1.681 6.229-1.847 2.854-.177 5.546.453 7.6 1.838.527.357.649 1.088.293 1.576z"/></svg> أنغامي</label>
+            <input type="text" id="adminSongAnghami" placeholder="https://play.anghami.com/song/..." dir="ltr">
+          </div>
+          <div class="field">
+            <label style="display:flex;align-items:center;gap:6px;color:var(--text-muted);"><svg width="14" height="14" viewBox="0 0 24 24" fill="#fa243c"><path d="M17.06 21.937a12.002 12.002 0 01-10.12 0C3.288 20.168 0 16.622 0 12.007 0 5.376 5.376 0 12 0s12 5.376 12 12.007c0 4.615-3.288 8.16-6.94 9.93zM12 9.668a2.333 2.333 0 100 4.666 2.333 2.333 0 000-4.666zm5.25 2.333c0 2.899-2.351 5.25-5.25 5.25s-5.25-2.351-5.25-5.25S9.101 6.75 12 6.75s5.25 2.351 5.25 5.25z"/></svg> أبل ميوزك</label>
+            <input type="text" id="adminSongApple" placeholder="https://music.apple.com/album/..." dir="ltr">
+          </div>
+          <div class="field">
+            <label style="display:flex;align-items:center;gap:6px;color:var(--text-muted);"><svg width="14" height="14" viewBox="0 0 24 24" fill="#ff0099"><circle cx="12" cy="12" r="12"/><text x="12" y="16" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold" font-family="sans-serif">D</text></svg> ديزر</label>
+            <input type="text" id="adminSongDeezer" placeholder="https://deezer.page.link/..." dir="ltr">
+          </div>
+        </div>
+        <button type="submit">إضافة الأغنية</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Add Media Modal (admin) -->
+<div class="modal-overlay" id="addMediaModal">
+  <div class="modal">
+    <button class="modal-close" id="addMediaClose" aria-label="إغلاق">✕</button>
+    <div class="modal-body">
+      <h3>إضافة مقطع</h3>
+      <p>أضف فيديو أو صوت إلى قسم أعمالنا</p>
+      <form class="auth-form" id="addMediaForm">
+        <div class="field">
+          <label>النوع</label>
+          <select id="mediaType">
+            <option value="video">فيديو</option>
+            <option value="audio">صوت</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>العنوان</label>
+          <input type="text" id="mediaTitle" placeholder="عنوان المقطع" required>
+        </div>
+        <div class="field">
+          <label>رابط يوتيوب (للفيديو)</label>
+          <input type="url" id="mediaUrl" placeholder="https://youtube.com/watch?v=..." dir="ltr">
+        </div>
+        <div class="field">
+          <label>التصنيف</label>
+          <input type="text" id="mediaCategory" placeholder="مثال: تسجيل، ميكس، ماستر..." required>
+        </div>
+        <button type="submit">إضافة</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Add Category Modal -->
+<div class="modal-overlay" id="addCategoryModal">
+  <div class="modal">
+    <button class="modal-close" id="addCategoryClose" aria-label="إغلاق">✕</button>
+    <div class="modal-body">
+      <h3>إضافة تصنيف</h3>
+      <p>أضف تصنيف موسيقي جديد</p>
+      <form class="auth-form" id="addCategoryForm">
+        <div class="field">
+          <label>اسم التصنيف</label>
+          <input type="text" id="adminCatName" placeholder="مثال: راب، هبة، مهرجانات..." dir="rtl" required>
+        </div>
+        <div class="field">
+          <label>نوع التصنيف</label>
+          <select id="adminCatType">
+            <option value="genre">نوع مزيكا</option>
+            <option value="artist">فنان</option>
+            <option value="date">تاريخ</option>
+          </select>
+        </div>
+        <button type="submit">إضافة</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Song Request Modal -->
+<div class="modal-overlay" id="songRequestModal">
+  <div class="modal" style="max-width:550px;">
+    <button class="modal-close" id="songRequestClose" aria-label="إغلاق">✕</button>
+    <div class="modal-body">
+      <h3>طلب إضافة أغنية</h3>
+      <p>قدم طلبك لإضافة أغنيتك إلى الموقع</p>
+      <form class="auth-form request-form" id="songRequestForm">
+        <div class="field">
+          <label>اسم الأغنية</label>
+          <input type="text" id="reqSongTitle" placeholder="اسم الأغنية" required>
+        </div>
+        <div class="field">
+          <label>اسم الفنان</label>
+          <input type="text" id="reqSongArtist" placeholder="اسم الفنان أو الفرقة" required>
+        </div>
+        <div class="field">
+          <label>نوع المزيكا</label>
+          <input type="text" id="reqSongGenre" placeholder="مثال: راب، بوب، R&B..." required>
+        </div>
+        <div class="field">
+          <label>رابط يوتيوب أو صوت (اختياري)</label>
+          <input type="url" id="reqSongUrl" placeholder="https://youtube.com/watch?v=..." dir="ltr">
+        </div>
+        <div class="field">
+          <label>روابط استماع (اختياري)</label>
+          <input type="text" id="reqSongLinks" placeholder="رابط سبوتيفاي، أنغامي..." dir="ltr">
+        </div>
+        <div class="field">
+          <label>ملاحظات إضافية</label>
+          <textarea id="reqSongNotes" placeholder="أي تفاصيل إضافية..." style="min-height:60px;"></textarea>
+        </div>
+        <button type="submit">إرسال الطلب</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Review Modal -->
+<div class="modal-overlay" id="reviewModal">
+  <div class="modal">
+    <button class="modal-close" id="reviewClose" aria-label="إغلاق">✕</button>
+    <div class="modal-body">
+      <h3>أضف تقييمك</h3>
+      <p>شاركنا رأيك في Bu Kitchen</p>
+      <form class="auth-form" id="reviewForm">
+        <div class="field">
+          <label>اسمك</label>
+          <input type="text" id="revName" placeholder="الاسم" required>
+        </div>
+        <div class="field">
+          <label>التقييم</label>
+          <div style="display:flex;gap:6px;font-size:28px;direction:ltr;" id="starRating">
+            <span data-star="1" style="cursor:pointer;transition:transform 0.2s;">☆</span>
+            <span data-star="2" style="cursor:pointer;transition:transform 0.2s;">☆</span>
+            <span data-star="3" style="cursor:pointer;transition:transform 0.2s;">☆</span>
+            <span data-star="4" style="cursor:pointer;transition:transform 0.2s;">☆</span>
+            <span data-star="5" style="cursor:pointer;transition:transform 0.2s;">☆</span>
+          </div>
+        </div>
+        <div class="field">
+          <label>رأيك</label>
+          <textarea id="revText" placeholder="اكتب رأيك هنا..." style="min-height:80px;" required></textarea>
+        </div>
+        <button type="submit">نشر التقييم</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Artist Profile Modal -->
+<div class="modal-overlay" id="artistModal">
+  <div class="modal" style="max-width:500px;">
+    <button class="modal-close" id="artistClose" aria-label="إغلاق">✕</button>
+    <div class="modal-body">
+      <div id="artistModalContent"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Media Player Modal -->
+<div class="modal-overlay" id="mediaPlayerModal">
+  <div class="modal" style="max-width:800px;">
+    <button class="modal-close" id="mediaPlayerClose" aria-label="إغلاق">✕</button>
+    <div class="modal-body" style="padding:20px;">
+      <div id="mediaPlayerContainer"></div>
+      <h3 id="mediaPlayerTitle" style="margin-top:12px;font-size:16px;font-weight:700;text-align:center;"></h3>
+    </div>
+  </div>
+</div>
+
+<!-- Admin Services Edit Modal -->
+<div class="modal-overlay" id="serviceModal">
+  <div class="modal">
+    <button class="modal-close" id="serviceClose" aria-label="إغلاق">✕</button>
+    <div class="modal-body">
+      <h3 id="serviceModalTitle">إضافة خدمة</h3>
+      <form class="auth-form" id="serviceForm">
+        <div class="field">
+          <label>اسم الخدمة</label>
+          <input type="text" id="svcName" required>
+        </div>
+        <div class="field">
+          <label>الوصف</label>
+          <textarea id="svcDesc" style="min-height:60px;" required></textarea>
+        </div>
+        <div class="field">
+          <label>السعر (جنيه)</label>
+          <input type="number" id="svcPrice" min="0" required>
+        </div>
+        <div class="field">
+          <label>خصم (اختياري)</label>
+          <input type="text" id="svcDiscount" placeholder="مثال: 20% خصم">
+        </div>
+        <div class="field">
+          <label><input type="checkbox" id="svcFeatured"> خدمة مميزة</label>
+        </div>
+        <button type="submit" id="serviceSubmit">حفظ</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Map Modal (admin) -->
+<div class="modal-overlay" id="mapEditModal">
+  <div class="modal" style="max-width:450px;">
+    <button class="modal-close" id="mapEditClose" aria-label="إغلاق">✕</button>
+    <div class="modal-body">
+      <h3>تعديل إحداثيات الخريطة</h3>
+      <form class="auth-form" id="mapEditForm">
+        <div class="field">
+          <label>خط العرض (Latitude)</label>
+          <input type="text" id="mapLat" placeholder="31.2001" dir="ltr" required>
+        </div>
+        <div class="field">
+          <label>خط الطول (Longitude)</label>
+          <input type="text" id="mapLng" placeholder="29.9187" dir="ltr" required>
+        </div>
+        <div class="field">
+          <label>عنوان الاستوديو</label>
+          <input type="text" id="mapAddress" placeholder="عنوان الاستوديو" required>
+        </div>
+        <button type="submit">حفظ الإحداثيات</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Song Links Modal -->
+<div class="modal-overlay" id="videoModal">
+  <div class="modal" style="max-width:500px;">
+    <button class="modal-close" id="videoClose" aria-label="إغلاق">✕</button>
+    <div class="modal-body" style="text-align:center;">
+      <h3 id="videoTitle">اسم الأغنية</h3>
+      <p id="videoMeta" style="color:var(--text-muted);font-size:14px;margin-bottom:18px;">Bu Kitchen</p>
+      <div class="modal-platform-links" id="platformLinks"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ===== SUPABASE CONFIG =====
+var SUPABASE_URL = ''; var SUPABASE_ANON_KEY = '';
+var supabase = null;
+
+// ===== LANGUAGE DICTIONARY =====
+const LANG = {
+  ar: {
+    siteTitle:'Bu Kitchen - استوديو تسجيل',heroBadge:'الإسكندرية، مصر',heroTitle:'مطبخك الموسيقي\nاحتراف بلا حدود',
+    heroSub:'تسجيل، إنتاج، مكساج وماسترنج بأحدث المعدات الصوتية. الإسكندرية، مصر.',discoverSongs:'اكتشف الأغاني',
+    bookNow:'احجز الآن',songsTitle:'الأغاني المنتجة',songsSub:'إنتاجات Bu Kitchen الموسيقية',
+    ourWork:'أعمالنا',ourWorkSub:'فيديوهات وصوتيات من جلسات التجهيز والإنتاج',
+    artists:'الفنانون معنا',artistsSub:'تعرف على الفنانين المسجلين في Bu Kitchen',
+    services:'الخدمات والأسعار',servicesSub:'باقاتنا المتنوعة لتلبية احتياجاتك الموسيقية',
+    about:'عن الاستوديو',aboutSub:'مطبخك الموسيقي المتكامل في الإسكندرية',
+    booking:'احجز الاستوديو',bookingSub:'احجز جلستك في Bu Kitchen',
+    reviews:'تقييمات العملاء',reviewsSub:'ماذا يقول عنا عملاؤنا',
+    addReview:'أضف تقييمك',mapTitle:'موقع الاستوديو',mapSub:'تفضل بزيارتنا في الإسكندرية',
+    login:'تسجيل الدخول',register:'إنشاء حساب',logout:'تسجيل الخروج',
+    loginTitle:'تسجيل الدخول',loginSub:'ادخل بياناتك للدخول إلى حسابك',
+    regTitle:'إنشاء حساب',regSub:'سجّل الآن لحجز جلسات الاستوديو',
+    emailOrUser:'البريد الإلكتروني أو اسم المستخدم',password:'كلمة المرور',
+    name:'الاسم الكامل',username:'اسم المستخدم',email:'البريد الإلكتروني',
+    phone:'رقم الهاتف',or:'أو',noAccount:'ما عندك حساب؟',registerLink:'سجّل الآن',
+    haveAccount:'عندك حساب؟',loginLink:'سجّل دخول',adminPanel:'لوحة التحكم',
+    myBookings:'حجوزاتي',requestSong:'طلب إضافة أغنية',noSongs:'لا توجد أغانٍ',
+    noBookings:'لا توجد حجوزات سابقة',noReviews:'لا توجد تقييمات بعد',
+    bookDate:'التاريخ',bookTime:'الوقت',bookDuration:'المدة',bookNotes:'ملاحظات (اختياري)',
+    confirmBook:'تأكيد الحجز',cancelBook:'إلغاء',pending:'قيد الانتظار',
+    confirmed:'مؤكدة',cancelled:'ملغية',rejected:'مرفوضة',admin:'أدمن',
+    play:'تشغيل',youtube:'يوتيوب',delete:'حذف',add:'إضافة',save:'حفظ',
+    edit:'تعديل',loading:'جارٍ التحميل...',error:'خطأ',success:'تم بنجاح',
+    welcome:'مرحباً',loggedOut:'تم تسجيل الخروج',all:'الكل',
+    genre:'نوع مزيكا',artist:'فنان',date:'تاريخ',discount:'خصم',
+    minutes:'دقيقة',hours:'ساعات',hour:'ساعة',song:'أغنية',songs:'أغانٍ',name:'الاسم',type:'النوع',count:'العدد',price:'السعر',rating:'التقييم',review:'التعليق',bookings:'الحجوزات',confirm:'موافقة',reject:'رفض',status:'الحالة'
+  },
+  en: {
+    siteTitle:'Bu Kitchen - Recording Studio',heroBadge:'Alexandria, Egypt',
+    heroTitle:'Your Musical Kitchen\nProfessional Without Limits',
+    heroSub:'Recording, production, mixing and mastering with the latest audio equipment. Alexandria, Egypt.',
+    discoverSongs:'Discover Songs',bookNow:'Book Now',
+    songsTitle:'Produced Songs',songsSub:'Bu Kitchen music productions',
+    ourWork:'Our Work',ourWorkSub:'Videos and audio from production sessions',
+    artists:'Artists With Us',artistsSub:'Meet the artists registered at Bu Kitchen',
+    services:'Services & Pricing',servicesSub:'Our packages to meet your musical needs',
+    about:'About the Studio',aboutSub:'Your complete musical kitchen in Alexandria',
+    booking:'Book the Studio',bookingSub:'Book your session at Bu Kitchen',
+    reviews:'Client Reviews',reviewsSub:'What our clients say about us',
+    addReview:'Add Your Review',mapTitle:'Studio Location',mapSub:'Visit us in Alexandria',
+    login:'Login',register:'Create Account',logout:'Logout',
+    loginTitle:'Login',loginSub:'Enter your credentials',
+    regTitle:'Create Account',regSub:'Sign up now to book studio sessions',
+    emailOrUser:'Email or Username',password:'Password',
+    name:'Full Name',username:'Username',email:'Email',phone:'Phone',
+    or:'Or',noAccount:'No account?',registerLink:'Register now',
+    haveAccount:'Have an account?',loginLink:'Login',adminPanel:'Admin Panel',
+    myBookings:'My Bookings',requestSong:'Request a Song',noSongs:'No songs',
+    noBookings:'No previous bookings',noReviews:'No reviews yet',
+    bookDate:'Date',bookTime:'Time',bookDuration:'Duration',bookNotes:'Notes (optional)',
+    confirmBook:'Confirm Booking',cancelBook:'Cancel',pending:'Pending',
+    confirmed:'Confirmed',cancelled:'Cancelled',rejected:'Rejected',admin:'Admin',
+    play:'Play',youtube:'YouTube',delete:'Delete',add:'Add',save:'Save',
+    edit:'Edit',loading:'Loading...',error:'Error',success:'Success',
+    welcome:'Welcome',loggedOut:'Logged out',all:'All',
+    genre:'Genre',artist:'Artist',date:'Date',discount:'Discount',
+    minutes:'min',hours:'hrs',hour:'hr',song:'Song',songs:'Songs',name:'Name',type:'Type',count:'Count',price:'Price',rating:'Rating',review:'Review',bookings:'Bookings',confirm:'Approve',reject:'Reject',status:'Status'
+  }
+};
+
+// Scroll progress
+window.addEventListener('scroll', function() {
+  var h = document.documentElement.scrollHeight - window.innerHeight;
+  document.querySelector('#scrollProgress span').style.width = (window.scrollY / h * 100) + '%';
+});
+
+// Custom cursor
+var dot = document.getElementById('cursorDot');
+var ring = document.getElementById('cursorRing');
+if (window.matchMedia('(hover:hover)').matches) {
+  document.addEventListener('mousemove', function(e) {
+    dot.style.left = e.clientX + 'px';
+    dot.style.top = e.clientY + 'px';
+    ring.style.left = e.clientX + 'px';
+    ring.style.top = e.clientY + 'px';
+  });
+  document.querySelectorAll('a, button, .song-card, .cat-pill, .studio-feature').forEach(function(el) {
+    el.addEventListener('mouseenter', function() { ring.classList.add('hovering'); });
+    el.addEventListener('mouseleave', function() { ring.classList.remove('hovering'); });
+  });
+}
+
+// Audio visualizer
+(function initVisualizer() {
+  var container = document.getElementById('visualizer');
+  if (!container) return;
+  var count = 24;
+  for (var i = 0; i < count; i++) {
+    var bar = document.createElement('div');
+    bar.className = 'vis-bar';
+    var h = 20 + Math.random() * 80;
+    bar.style.height = h + '%';
+    bar.style.animationDelay = (Math.random() * 2) + 's';
+    bar.style.setProperty('--vis-duration', (0.3 + Math.random() * 0.5) + 's');
+    container.appendChild(bar);
+  }
+  document.addEventListener('mousemove', function(e) {
+    var bars = container.querySelectorAll('.vis-bar');
+    var xRatio = e.clientX / window.innerWidth;
+    bars.forEach(function(b, i) {
+      var newDur = 0.2 + (xRatio * 0.6) + (i / bars.length) * 0.2;
+      b.style.setProperty('--vis-duration', newDur + 's');
+      var maxH = (1 - xRatio * 0.3) * 100;
+      b.style.height = maxH + '%';
+    });
+  });
+})();
+
+// Scroll reveal (IntersectionObserver)
+(function initReveal() {
+  var els = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    var obs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) { entry.target.classList.add('visible'); obs.unobserve(entry.target); }
+      });
+    }, { threshold: 0.1 });
+    els.forEach(function(el) { obs.observe(el); });
+  } else { els.forEach(function(el) { el.classList.add('visible'); }); }
+})();
+
+// Studio wave visualizer
+(function initStudioWave() {
+  var container = document.getElementById('studioWave');
+  if (!container) return;
+  for (var i = 0; i < 30; i++) {
+    var span = document.createElement('span');
+    span.style.animationDelay = (i * 0.05) + 's';
+    span.style.animationDuration = (0.8 + Math.random() * 0.8) + 's';
+    container.appendChild(span);
+  }
+})();
+
+// 3D Tilt on song cards (delegated via songsGrid)
+(function initCardTilt() {
+  var grid = document.getElementById('songsGrid');
+  if (!grid) return;
+  grid.addEventListener('mousemove', function(e) {
+    var card = e.target.closest('.song-card');
+    if (!card) return;
+    var rect = card.getBoundingClientRect();
+    var x = e.clientX - rect.left;
+    var y = e.clientY - rect.top;
+    var centerX = rect.width / 2;
+    var centerY = rect.height / 2;
+    var rotateX = ((y - centerY) / centerY) * -8;
+    var rotateY = ((x - centerX) / centerX) * 8;
+    card.style.transform = 'perspective(800px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) translateY(-4px)';
+  });
+  grid.addEventListener('mouseleave', function(e) {
+    var card = e.target.closest('.song-card');
+    if (card) { card.style.transform = ''; }
+  });
+})();
+
+// Splash particles
+(function initSplash() {
+  var container = document.getElementById('splashParticles');
+  if (!container) return;
+  for (var i = 0; i < 30; i++) {
+    var p = document.createElement('div');
+    p.className = 'splash-particle';
+    p.style.left = (Math.random() * 100) + '%';
+    p.style.top = (40 + Math.random() * 30) + '%';
+    p.style.animationDelay = (Math.random() * 0.8) + 's';
+    p.style.animationDuration = (1 + Math.random() * 0.5) + 's';
+    p.style.background = ['var(--primary)','var(--secondary)','var(--accent)'][Math.floor(Math.random() * 3)];
+    container.appendChild(p);
+  }
+})();
+
+// ===== MENU =====
+var menuOpen = false;
+function toggleMenu() {
+  menuOpen = !menuOpen;
+  document.getElementById('menuPanel').classList.toggle('open', menuOpen);
+  document.getElementById('menuOverlay').classList.toggle('active', menuOpen);
+}
+function closeMenu() {
+  if (menuOpen) toggleMenu();
+}
+
+// ===== API HELPER =====
+const API_BASE = '/api';
+function getToken() { try { return sessionStorage.getItem('bukitchen_token'); } catch(e) { return null; } }
+function setToken(t) { try { sessionStorage.setItem('bukitchen_token', t); } catch(e) {} }
+function clearToken() { try { sessionStorage.removeItem('bukitchen_token'); } catch(e) {} }
+async function api(method, path, body) {
+  var opts = { method: method, headers: { 'Content-Type': 'application/json' } };
+  var token = getToken();
+  if (token) opts.headers['Authorization'] = 'Bearer ' + token;
+  if (body) opts.body = JSON.stringify(body);
+  var res = await fetch(API_BASE + path, opts);
+  var json = await res.json();
+  if (!res.ok) throw new Error(json.error || 'Request failed');
+  return json;
+}
+function apiGet(path) { return api('GET', path); }
+function apiPost(path, body) { return api('POST', path, body); }
+function apiPut(path, body) { return api('PUT', path, body); }
+function apiPatch(path, body) { return api('PATCH', path, body); }
+function apiDel(path) { return api('DELETE', path); }
+
+// ===== DATA =====
+let data = {
+  users: [], categories: [], songs: [], bookings: [], artists: [],
+  services: [], reviews: [], media: [], songRequests: [],
+  settings: {}, siteTexts: []
+};
+let currentUser = null;
+let activeCategory = null;
+let activeAdminTab = 'tabSongs';
+
+// ===== HELPERS =====
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
+function esc(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML}
+function hashPw(s){var h=0;for(var i=0;i<s.length;i++){h=((h<<5)-h)+s.charCodeAt(i);h|=0}return'h'+Math.abs(h).toString(36)}
+function extractYoutubeId(u){if(!u)return null;var r=[/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/|youtube\.com\/shorts\/)([a-zA-Z0-9_-]{11})/,/^([a-zA-Z0-9_-]{11})$/];for(var i=0;i<r.length;i++){var m=u.match(r[i]);if(m)return m[1]}return null}
+function getThumb(id){return'https://img.youtube.com/vi/'+id+'/hqdefault.jpg'}
+function getFirstYtThumb(url){var id=extractYoutubeId(url);return id?getThumb(id):''}
+function textByLang(obj){return obj&&obj[currentLang]?obj[currentLang]:obj&&obj.ar?obj.ar:typeof obj==='string'?obj:''}
+function toast(msg,type){var el=document.getElementById('toast');el.textContent=msg;el.className='toast '+(type||'success');el.classList.add('show');clearTimeout(el._t);el._t=setTimeout(function(){el.classList.remove('show')},2800)}
+
+// ===== SITE TEXTS =====
+function getText(key){for(var i=0;i<data.siteTexts.length;i++){if(data.siteTexts[i].key===key)return textByLang(data.siteTexts[i])}return''}
+async function setText(key,ar,en){
+  for(var i=0;i<data.siteTexts.length;i++){if(data.siteTexts[i].key===key){data.siteTexts[i].ar=ar;data.siteTexts[i].en=en;break}}
+  try { await apiPut('/texts/' + key, { ar: ar, en: en }); } catch(e) {}
+}
+
+// ===== DATA PERSISTENCE =====
+async function loadFromAPI() {
+  try {
+    var results = await Promise.all([
+      apiGet('/songs').catch(function() { return []; }),
+      apiGet('/categories').catch(function() { return []; }),
+      apiGet('/bookings').catch(function() { return []; }),
+      apiGet('/artists').catch(function() { return []; }),
+      apiGet('/services').catch(function() { return []; }),
+      apiGet('/reviews').catch(function() { return []; }),
+      apiGet('/media').catch(function() { return []; }),
+      apiGet('/requests').catch(function() { return []; }),
+      apiGet('/settings').catch(function() { return {}; }),
+      apiGet('/texts').catch(function() { return []; }),
+    ]);
+    data.songs = results[0];
+    data.categories = results[1];
+    data.bookings = results[2];
+    data.artists = results[3];
+    data.services = results[4];
+    data.reviews = results[5];
+    data.media = results[6];
+    data.songRequests = results[7];
+    var settings = results[8];
+    if (settings && settings.location) data.settings = settings;
+    var texts = results[9];
+    if (texts) {
+      data.siteTexts = [];
+      for (var k in texts) data.siteTexts.push({ key: k, ar: texts[k].ar, en: texts[k].en });
+    }
+  } catch(e) { console.error('loadFromAPI error', e); }
+}
+
+// ===== AUTH =====
+async function login(emailOrUser, password) {
+  try {
+    var res = await apiPost('/auth/login', { emailOrUser: emailOrUser, password: password });
+    currentUser = res.user;
+    setToken(res.token);
+    if (currentUser.role === 'admin') { window.location.href = 'admin.html'; return true; }
+    updateUI(); closeMenu(); closeAllModals(); toast(__('welcome') + ' ' + currentUser.name + '!');
+    return true;
+  } catch(e) {
+    if (typeof firebase !== 'undefined' && firebase.auth && emailOrUser.indexOf('@') > -1) {
+      try {
+        var cred = await firebase.auth().signInWithEmailAndPassword(emailOrUser, password);
+        var fbRes = await apiPost('/auth/google', { firebaseUid: cred.user.uid, email: cred.user.email, name: cred.user.displayName || '', photo: cred.user.photoURL || '', phone: cred.user.phoneNumber || '' });
+        currentUser = fbRes.user;
+        setToken(fbRes.token);
+        updateUI(); closeMenu(); closeAllModals(); toast(__('welcome') + ' ' + currentUser.name + '!');
+        return true;
+      } catch(fbErr) {
+        document.getElementById('loginError').textContent = fbErr.message;
+        document.getElementById('loginError').style.display = 'block';
+        return false;
+      }
+    }
+    document.getElementById('loginError').textContent = currentLang === 'ar' ? 'بيانات الدخول غير صحيحة' : 'Invalid credentials';
+    document.getElementById('loginError').style.display = 'block';
+    toast(__('error'), 'error');
+    return false;
+  }
+}
+async function register(name, username, email, phone, password) {
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { document.getElementById('registerError').textContent = 'البريد الإلكتروني غير صالح'; document.getElementById('registerError').style.display = 'block'; return false; }
+  if (password.length < 6) { document.getElementById('registerError').textContent = 'كلمة المرور يجب أن تكون 6 أحرف على الأقل'; document.getElementById('registerError').style.display = 'block'; return false; }
+  try {
+    await apiPost('/auth/register', { name: name, username: username, email: email, phone: phone, password: password });
+    document.getElementById('registerForm').reset();
+    toast('تم التسجيل بنجاح! سجّل دخول الآن');
+    closeAllModals();
+    openLogin();
+    return true;
+  } catch(e) {
+    document.getElementById('registerError').textContent = e.message;
+    document.getElementById('registerError').style.display = 'block';
+    return false;
+  }
+}
+async function handleFirebaseAuth(fbUser, provider) {
+  if (!fbUser) return;
+  try {
+    var res = await apiPost('/auth/google', {
+      firebaseUid: fbUser.uid,
+      email: fbUser.email || '',
+      name: fbUser.displayName || (fbUser.email ? fbUser.email.split('@')[0] : 'User'),
+      photo: fbUser.photoURL || '',
+      phone: fbUser.phoneNumber || ''
+    });
+    currentUser = res.user;
+    setToken(res.token);
+    updateUI(); closeAllModals(); toast(__('welcome') + ' ' + currentUser.name + '!');
+  } catch(e) { toast(e.message, 'error'); }
+}
+
+function logout() { currentUser = null; clearToken(); updateUI(); closeMenu(); toast(__('loggedOut')); }
+async function restoreSession() {
+  var t = getToken();
+  if (!t) return;
+  try {
+    var me = await apiGet('/auth/me');
+    currentUser = me;
+    if (me.role === 'admin') { window.location.href = 'admin.html'; }
+    updateUI();
+  } catch(e) { clearToken(); }
+}
+
+// ===== UI =====
+function updateUI(){
+  var loggedIn=!!currentUser;var isAdmin=loggedIn&&currentUser.role==='admin'
+  document.getElementById('menuLoginBtn').classList.toggle('hidden',loggedIn)
+  document.getElementById('menuLogoutBtn').classList.toggle('hidden',!loggedIn)
+  document.getElementById('menuAdminPanel').classList.toggle('hidden',!isAdmin)
+  document.getElementById('menuMyBookings').classList.toggle('hidden',!loggedIn||isAdmin)
+  document.getElementById('menuRequestSong').classList.toggle('hidden',!loggedIn)
+  document.getElementById('menuUserName').classList.toggle('hidden',!loggedIn)
+  if(loggedIn)document.getElementById('menuUserName').textContent=currentUser.name
+  document.getElementById('adminPanel').classList.toggle('hidden',!isAdmin)
+  document.getElementById('navLoginBtn').classList.toggle('hidden',loggedIn)
+  document.getElementById('navLogoutBtn').classList.toggle('hidden',!loggedIn)
+  renderBooking();renderUserBookings()
+  if(isAdmin){renderAdminPanel();initEditableText()}
+}
+
+
+function closeAllModals(){document.querySelectorAll('.modal-overlay').forEach(function(m){m.classList.remove('active')});document.querySelectorAll('.modal-overlay form').forEach(function(f){f.reset()});document.getElementById('starRating').dataset.rating='0';var ss=document.querySelectorAll('#starRating [data-star]');for(var si=0;si<ss.length;si++)ss[si].textContent='☆';document.body.style.overflow=''}
+function openLogin(){closeAllModals();document.getElementById('loginError').style.display='none';document.getElementById('loginModal').classList.add('active')}
+function openRegister(){closeAllModals();document.getElementById('registerError').style.display='none';document.getElementById('registerModal').classList.add('active')}
+
+// ===== CATEGORIES =====
+var catFilterType='all';
+function renderCategories(){
+  var container=document.getElementById('catPills')
+  var typeBtns='<div style="display:flex;gap:6px;justify-content:center;margin-bottom:12px;flex-wrap:wrap;">'
+  var types=[{v:'all',l:__('all')},{v:'genre',l:__('genre')},{v:'artist',l:__('artist')},{v:'date',l:__('date')}]
+  for(var t=0;t<types.length;t++){typeBtns+='<button class="cat-pill'+(catFilterType===types[t].v?' active':'')+'" data-type-filter="'+types[t].v+'">'+types[t].l+'</button>'}
+  typeBtns+='</div>'
+  var html=typeBtns+'<button class="cat-pill'+(!activeCategory?' active':'')+'" data-cat="">'+__('all')+'</button>'
+  for(var i=0;i<data.categories.length;i++){
+    var c=data.categories[i]
+    if(catFilterType!=='all'&&c.type!==catFilterType)continue
+    html+='<button class="cat-pill'+(activeCategory===c.id?' active':'')+'" data-cat="'+c.id+'">'+esc(c.name)+'</button>'
+  }
+  container.innerHTML=html
+}
+
+// ===== RENDER SONGS =====
+function renderSongs(){
+  var grid=document.getElementById('songsGrid');var filtered=data.songs.filter(function(s){return s.status==='approved'||s.status===undefined||s.status===''})
+  if(activeCategory)filtered=filtered.filter(function(s){return s.catId===activeCategory})
+  if(!filtered.length){grid.innerHTML='<div class="empty-state"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/></svg><h3>'+__('noSongs')+'</h3><p>'+(activeCategory?'لا توجد أغانٍ في هذا التصنيف':'')+'</p></div>';return}
+  grid.innerHTML=filtered.map(function(s){
+    var cat=null;for(var i=0;i<data.categories.length;i++){if(data.categories[i].id===s.catId){cat=data.categories[i];break}}
+    var artist=null;for(var j=0;j<data.artists.length;j++){if(data.artists[j].id===s.artistId){artist=data.artists[j];break}}
+    var platChips=''
+    if(s.spotify)platChips+='<a href="'+esc(s.spotify)+'" target="_blank" rel="noopener noreferrer" class="platform-chip" style="color:#1db954;border:1px solid rgba(29,185,84,0.2);"><svg width="10" height="10" viewBox="0 0 24 24" fill="#1db954"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg> سبوتيفاي</a>'
+    if(s.anghami)platChips+='<a href="'+esc(s.anghami)+'" target="_blank" rel="noopener noreferrer" class="platform-chip" style="color:#f50;border:1px solid rgba(255,85,0,0.2);"><svg width="10" height="10" viewBox="0 0 24 24" fill="#f50"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 15.219c-.249.414-.788.537-1.213.267-1.16-.714-2.68-1.096-4.214-.98-1.506.112-2.806.595-3.446 1.035-.41.274-.96.178-1.216-.232-.256-.41-.136-.939.286-1.199.818-.563 2.366-1.144 4.144-1.279 1.826-.142 3.583.308 5.04 1.21.443.278.573.875.32 1.299zm1.476-2.887c-.314.466-.94.601-1.398.278-1.506-.946-3.472-1.493-5.654-1.338-2.118.154-3.879.833-4.693 1.338a.993.993 0 01-1.393-.251.986.986 0 01.248-1.382c1.097-.699 3.144-1.494 5.569-1.673 2.496-.187 4.758.456 6.513 1.606.466.302.59.927.31 1.394zm.127-3.016c-.393.52-1.12.637-1.624.253-1.715-1.149-4.086-1.686-6.61-1.544-2.443.142-4.447.9-5.357 1.512a1.17 1.17 0 01-1.602-.293 1.18 1.18 0 01.283-1.608c1.153-.792 3.46-1.681 6.229-1.847 2.854-.177 5.546.453 7.6 1.838.527.357.649 1.088.293 1.576z"/></svg> أنغامي</a>'
+    if(s.appleMusic)platChips+='<a href="'+esc(s.appleMusic)+'" target="_blank" rel="noopener noreferrer" class="platform-chip" style="color:#fa243c;border:1px solid rgba(250,36,60,0.2);"><svg width="10" height="10" viewBox="0 0 24 24" fill="#fa243c"><path d="M17.06 21.937a12.002 12.002 0 01-10.12 0C3.288 20.168 0 16.622 0 12.007 0 5.376 5.376 0 12 0s12 5.376 12 12.007c0 4.615-3.288 8.16-6.94 9.93zM12 9.668a2.333 2.333 0 100 4.666 2.333 2.333 0 000-4.666zm5.25 2.333c0 2.899-2.351 5.25-5.25 5.25s-5.25-2.351-5.25-5.25S9.101 6.75 12 6.75s5.25 2.351 5.25 5.25z"/></svg> أبل ميوزك</a>'
+    if(s.deezer)platChips+='<a href="'+esc(s.deezer)+'" target="_blank" rel="noopener noreferrer" class="platform-chip" style="color:#ff0099;border:1px solid rgba(255,0,153,0.2);"><svg width="10" height="10" viewBox="0 0 24 24" fill="#ff0099"><circle cx="12" cy="12" r="12"/><text x="12" y="16" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold" font-family="sans-serif">D</text></svg> ديزر</a>'
+    return '<div class="song-card" tabindex="0" role="button">'+
+      (currentUser&&currentUser.role==='admin'?'<span class="admin-badge">'+__('admin')+'</span>':'')+
+      '<div class="song-card-thumb"><img src="'+getThumb(s.id)+'" alt="'+esc(s.title)+'" loading="lazy"><div class="play-overlay"><div class="play-overlay-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div></div>'+
+      '<div class="song-card-body">'+(cat?'<div class="song-card-cat">'+esc(cat.name)+'</div>':'')+
+      (artist?'<div class="song-card-cat" style="color:var(--secondary);">'+esc(artist.name)+'</div>':'')+
+      '<div class="song-card-title">'+esc(s.title)+'</div>'+
+      '<div class="song-card-meta">Bu Kitchen</div></div>'+
+      (platChips?'<div class="platform-chips">'+platChips+'</div>':'')+
+      '<div class="song-card-actions">'+
+      '<button class="btn-play-card" data-id="'+s.id+'" data-title="'+esc(s.title)+'"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg> '+__('play')+'</button>'+
+      '<a class="btn-youtube-card" href="https://youtube.com/watch?v='+s.id+'" target="_blank"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg> '+__('youtube')+'</a>'+
+      (currentUser&&currentUser.role==='admin'?'<button class="btn-delete-card" data-del="'+s.id+'" title="'+__('delete')+'">✕</button>':'')+
+      '</div></div>'
+  }).join('')
+}
+
+// ===== RENDER BOOKING =====
+function renderBooking(){
+  var c=document.getElementById('bookingContent')
+  if(!currentUser){c.innerHTML='<div class="booking-login-msg"><p style="margin-bottom:12px;">سجّل دخول لحجز الاستوديو</p><button class="btn-primary" style="display:inline-flex;" id="bookingLoginBtn">'+__('login')+'</button></div>';var b=document.getElementById('bookingLoginBtn');if(b)b.addEventListener('click',openLogin);return}
+  var bookedSlots={};for(var bi=0;bi<data.bookings.length;bi++){var bk=data.bookings[bi];if(bk.status==='confirmed'||bk.status==='pending'){if(!bookedSlots[bk.date])bookedSlots[bk.date]=[];bookedSlots[bk.date].push(bk.time)}}
+  var times=['10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00','22:00']
+  var timeOpts='<option value="">'+__('bookTime')+'</option>'
+  for(var ti=0;ti<times.length;ti++){timeOpts+='<option value="'+times[ti]+'">'+times[ti]+'</option>'}
+  c.innerHTML='<form class="booking-form" id="bookingForm"><h3 style="font-size:18px;font-weight:700;margin-bottom:16px;">'+__('booking')+'</h3>'+
+    '<div class="field"><label>'+__('phone')+'</label><input type="tel" id="bookPhone" placeholder="+20 10 0000 0000" dir="ltr" value="'+esc(currentUser.phone)+'" required></div>'+
+    '<div class="field"><label>'+__('bookDate')+'</label><input type="date" id="bookDate" required></div>'+
+    '<div class="field"><label>'+__('bookTime')+'</label><select id="bookTime" required>'+timeOpts+'</select></div>'+
+    '<div class="field"><label>'+__('bookDuration')+'</label><select id="bookDuration" required><option value="1">1 '+__('hour')+'</option><option value="2">2 '+__('hours')+'</option><option value="3">3 '+__('hours')+'</option><option value="4">4 '+__('hours')+'</option><option value="6">6 '+__('hours')+'</option><option value="8">8 '+__('hours')+'</option></select></div>'+
+    '<div class="field"><label>'+__('bookNotes')+'</label><textarea id="bookNotes" placeholder="..."></textarea></div>'+
+    '<div id="bookedSlotsInfo" style="font-size:12px;color:var(--text-muted);margin-bottom:10px;"></div>'+
+    '<button type="submit">'+__('confirmBook')+'</button></form>'
+  var di=document.getElementById('bookDate');if(di){var t=new Date();t.setDate(t.getDate()+1);di.min=t.toISOString().split('T')[0];di.addEventListener('change',function(){var d=this.value;var info=document.getElementById('bookedSlotsInfo');if(bookedSlots[d]){info.innerHTML='<span style="color:var(--danger);">🕐 المواعيد المحجوزة: '+bookedSlots[d].map(function(t){return esc(t)}).join(', ')+'</span>'}else{info.innerHTML=''}})}
+  var f=document.getElementById('bookingForm');if(f){
+    f.addEventListener('submit',async function(e){e.preventDefault()
+      var phone=document.getElementById('bookPhone').value.trim()
+      var date=document.getElementById('bookDate').value;var time=document.getElementById('bookTime').value
+      var duration=parseInt(document.getElementById('bookDuration').value);var notes=document.getElementById('bookNotes').value.trim()
+      if(!phone||!date||!time){toast(__('error'),'error');return}
+      var sel=new Date(date+'T'+time);if(sel<=new Date()){toast(__('error'),'error');return}
+      try {
+        await apiPost('/bookings', { date: date, time: time, duration: duration, notes: notes, userPhone: phone });
+        toast(__('success')); f.reset();
+        await loadFromAPI(); renderBooking(); renderUserBookings();
+        if (currentUser && currentUser.role === 'admin') renderAdminPanel();
+      } catch(err) { toast(err.message, 'error'); }
+    })
+  }
+}
+
+// ===== USER BOOKINGS =====
+function renderUserBookings(){
+  var container=document.getElementById('userBookings')
+  if(!currentUser||currentUser.role==='admin'){container.innerHTML='';return}
+  var myB=data.bookings.filter(function(b){return b.userId===currentUser.id})
+  if(!myB.length){container.innerHTML='<p style="text-align:center;color:var(--text-dim);font-size:14px;margin-top:24px;">'+__('noBookings')+'</p>';return}
+  container.innerHTML='<h3 style="text-align:center;margin-bottom:16px;font-size:18px;font-weight:700;">'+__('myBookings')+'</h3>'+
+    myB.sort(function(a,b){return b.createdAt-a.createdAt}).map(function(b){
+      var sc=b.status==='confirmed'?'confirmed':b.status==='cancelled'||b.status==='rejected'?'cancelled':'pending'
+      var st=b.status==='confirmed'?__('confirmed'):b.status==='cancelled'?__('cancelled'):b.status==='rejected'?__('rejected'):__('pending')
+      return '<div class="booking-card"><div class="booking-card-info"><h4>'+b.date+' — '+b.time+'</h4><p>'+b.duration+' '+(b.duration===1?__('hour'):__('hours'))+(b.notes?' • '+esc(b.notes):'')+'</p></div><div style="display:flex;align-items:center;gap:10px;"><span class="booking-card-status '+sc+'">'+st+'</span>'+(b.status!=='cancelled'?'<button class="btn-cancel-booking" data-bid="'+b.id+'">'+__('cancelBook')+'</button>':'')+'</div></div>'
+    }).join('')
+}
+
+// ===== RENDER MEDIA =====
+function renderMedia(){
+  var grid=document.getElementById('mediaGrid');if(!data.media.length){grid.innerHTML='<div class="empty-state"><h3>'+__('noSongs')+'</h3></div>';return}
+  grid.innerHTML=data.media.map(function(m){
+    var thumb=m.thumbnail||getFirstYtThumb(m.url)
+    var title=textByLang(m.title);var cat=textByLang(m.category)
+    var badgeSvg=m.type==='video'?'<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>':'<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6l18-3z"/></svg>'
+    return '<div class="media-card" data-media-id="'+m.id+'"><div class="media-card-thumb"><img src="'+esc(thumb)+'" alt="'+esc(title)+'" loading="lazy"><span class="media-type-badge">'+badgeSvg+'</span><div class="play-overlay"><div class="play-overlay-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div></div><div class="media-card-body"><h4>'+esc(title)+'</h4><p>'+esc(cat)+'</p></div></div>'
+  }).join('')
+}
+
+// ===== RENDER ARTISTS =====
+function renderArtists(){
+  var grid=document.getElementById('artistsGrid')
+  if(!data.artists.length){grid.innerHTML='<div class="empty-state"><h3>'+__('noSongs')+'</h3></div>';return}
+  var sortedArtists = data.artists.slice().sort(function(a, b) {
+    if (a.name === 'Bu Kitchen') return 1;
+    if (b.name === 'Bu Kitchen') return -1;
+    return 0;
+  });
+  grid.innerHTML=sortedArtists.map(function(a){
+    var songCount=data.songs.filter(function(s){return s.artistId===a.id&&(s.status==='approved'||!s.status)}).length
+    return '<div class="artist-card" data-artist-id="'+a.id+'"><div class="artist-avatar">'+(a.avatar?'<img src="'+esc(a.avatar)+'" alt="'+esc(a.name)+'">':'<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:28px;color:var(--text-dim);">♪</div>')+'</div><h4>'+esc(a.name)+'</h4><p>'+songCount+' '+(songCount===1?__('song'):__('songs'))+'</p></div>'
+  }).join('')
+}
+
+// ===== RENDER SERVICES =====
+function renderServices(){
+  var grid=document.getElementById('servicesGrid')
+  if(!data.services.length){grid.innerHTML='<div class="empty-state"><h3>'+__('noSongs')+'</h3></div>';return}
+  grid.innerHTML=data.services.map(function(s){
+    var name=textByLang(s.name);var desc=textByLang(s.desc)
+    return '<div class="service-card'+(s.featured?' featured':'')+'"><div class="icon">★</div><h4>'+esc(name)+'</h4><p>'+esc(desc)+'</p><div class="price">'+(currentLang==='ar'?s.price+' جنيه':s.price+' EGP')+'</div>'+(s.discount?'<div class="discount-badge">'+esc(s.discount)+'</div>':'')+'</div>'
+  }).join('')
+}
+
+// ===== RENDER REVIEWS =====
+function renderReviews(){
+  var grid=document.getElementById('reviewsGrid')
+  var approved=data.reviews.filter(function(r){return r.approved})
+  if(!approved.length){grid.innerHTML='<div class="empty-state"><h3>'+__('noReviews')+'</h3></div>';return}
+  grid.innerHTML=approved.map(function(r){
+    var stars='';for(var si=0;si<5;si++)stars+=si<r.rating?'★':'☆'
+    var text=textByLang(r.text)
+    return '<div class="review-card"><div class="stars">'+stars+'</div><blockquote>'+esc(text)+'</blockquote><div class="author"><strong>'+esc(r.userName)+'</strong><small>'+new Date(r.createdAt).toLocaleDateString(currentLang==='ar'?'ar-EG':'en-US')+'</small></div></div>'
+  }).join('')
+}
+
+// ===== RENDER MAP =====
+function renderMap(){
+  var container=document.getElementById('mapContainer')
+  var loc=data.settings.location
+  container.innerHTML='<iframe src="https://maps.google.com/maps?q='+loc.lat+','+loc.lng+'&z=15&output=embed&hl='+currentLang+'" allowfullscreen loading="lazy"></iframe>'
+  var coords=document.getElementById('mapCoords');var addr=textByLang(loc.address)
+  coords.innerHTML='<span>📍 '+esc(addr)+'</span><span>'+loc.lat+', '+loc.lng+'</span>'+(currentUser&&currentUser.role==='admin'?'<button class="nav-auth-btn" id="editMapBtn">'+__('edit')+'</button>':'')
+  var eb=document.getElementById('editMapBtn');if(eb)eb.addEventListener('click',function(){document.getElementById('mapLat').value=loc.lat;document.getElementById('mapLng').value=loc.lng;document.getElementById('mapAddress').value=textByLang(loc.address);document.getElementById('mapEditModal').classList.add('active')})
+}
+
+// ===== ADMIN PANEL =====
+function renderAdminPanel(){renderAdminSongs();renderAdminCategories();renderAdminRequests();renderAdminServices();renderAdminReviews();renderAdminMedia();renderAdminBookings();renderAdminUsers()}
+
+function renderAdminSongs(q){
+  var c=document.getElementById('adminSongsList');if(!q)q=(document.getElementById('adminSearchSongs')||{}).value||''
+  var list=data.songs;if(q)list=list.filter(function(s){return s.title.toLowerCase().includes(q.toLowerCase())})
+  if(!list.length){c.innerHTML='<p style="text-align:center;color:var(--text-muted);padding:20px;">—</p>';return}
+  c.innerHTML='<div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>#</th><th>'+__('song')+'</th><th>'+__('artist')+'</th><th>'+__('genre')+'</th><th>'+__('edit')+'</th></tr></thead><tbody>'+
+    list.map(function(s,i){var cn='',an='';for(var j=0;j<data.categories.length;j++){if(data.categories[j].id===s.catId){cn=data.categories[j].name;break}}for(var k=0;k<data.artists.length;k++){if(data.artists[k].id===s.artistId){an=data.artists[k].name;break}}
+    return '<tr><td>'+(i+1)+'</td><td>'+esc(s.title)+'</td><td>'+esc(an||'—')+'</td><td>'+esc(cn)+'</td><td><div class="actions"><button class="admin-btn-danger" data-del-song="'+s.id+'">'+__('delete')+'</button></div></td></tr>'}).join('')+'</tbody></table></div>'
+}
+function renderAdminCategories(){
+  var c=document.getElementById('adminCategoriesList')
+  if(!data.categories.length){c.innerHTML='<p style="text-align:center;color:var(--text-muted);padding:20px;">—</p>';return}
+  c.innerHTML='<div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>#</th><th>'+__('name')+'</th><th>'+__('type')+'</th><th>'+__('count')+'</th><th>'+__('edit')+'</th></tr></thead><tbody>'+
+    data.categories.map(function(cat,i){var cnt=data.songs.filter(function(s){return s.catId===cat.id}).length;return '<tr><td>'+(i+1)+'</td><td>'+esc(cat.name)+'</td><td>'+esc(cat.type||'genre')+'</td><td>'+cnt+'</td><td><div class="actions"><button class="admin-btn-danger" data-del-cat="'+cat.id+'">'+__('delete')+'</button></div></td></tr>'}).join('')+'</tbody></table></div>'
+}
+function renderAdminRequests(){
+  var c=document.getElementById('adminRequestsList')
+  if(!data.songRequests.length){c.innerHTML='<p style="text-align:center;color:var(--text-muted);padding:20px;">—</p>';return}
+  c.innerHTML='<div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>#</th><th>'+__('name')+'</th><th>'+__('artist')+'</th><th>'+__('genre')+'</th><th>'+__('status')+'</th><th>'+__('edit')+'</th></tr></thead><tbody>'+
+    data.songRequests.sort(function(a,b){return b.createdAt-a.createdAt}).map(function(r,i){
+      var statusClass=r.status==='approved'?'confirmed':r.status==='rejected'?'cancelled':'pending'
+      var statusText=r.status==='approved'?__('confirmed'):r.status==='rejected'?__('rejected'):__('pending')
+      return '<tr><td>'+(i+1)+'</td><td>'+esc(r.title)+'</td><td>'+esc(r.artist)+'</td><td>'+esc(r.genre)+'</td><td><span class="booking-card-status '+statusClass+'">'+statusText+'</span></td><td><div class="actions">'+
+        (r.status==='pending'?'<button class="admin-btn-edit" data-approve-req="'+r.id+'">'+__('confirm')+'</button>':'')+
+        (r.status==='pending'?'<button class="admin-btn-danger" data-reject-req="'+r.id+'">'+__('reject')+'</button>':'')+
+        '</div></td></tr>'
+    }).join('')+'</tbody></table></div>'
+}
+function renderAdminServices(){
+  var c=document.getElementById('adminServicesList')
+  if(!data.services.length){c.innerHTML='<p style="text-align:center;color:var(--text-muted);padding:20px;">—</p>';return}
+  c.innerHTML='<div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>#</th><th>'+__('name')+'</th><th>'+__('price')+'</th><th>'+__('discount')+'</th><th>'+__('edit')+'</th></tr></thead><tbody>'+
+    data.services.map(function(s,i){return '<tr><td>'+(i+1)+'</td><td>'+esc(textByLang(s.name))+'</td><td>'+s.price+'</td><td>'+(s.discount||'—')+'</td><td><div class="actions"><button class="admin-btn-danger" data-del-svc="'+s.id+'">'+__('delete')+'</button></div></td></tr>'}).join('')+'</tbody></table></div>'
+}
+function renderAdminReviews(){
+  var c=document.getElementById('adminReviewsList');var filter=document.getElementById('adminReviewFilter').value
+  var list=data.reviews.slice();if(filter!=='all')list=list.filter(function(r){return filter==='pending'?!r.approved:r.approved})
+  if(!list.length){c.innerHTML='<p style="text-align:center;color:var(--text-muted);padding:20px;">—</p>';return}
+  c.innerHTML='<div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>#</th><th>'+__('name')+'</th><th>'+__('review')+'</th><th>'+__('rating')+'</th><th>'+__('status')+'</th><th>'+__('edit')+'</th></tr></thead><tbody>'+
+    list.map(function(r,i){var stars='';for(var si=0;si<5;si++)stars+=si<r.rating?'★':'☆'
+    return '<tr><td>'+(i+1)+'</td><td>'+esc(r.userName)+'</td><td>'+esc(textByLang(r.text).substring(0,50))+'</td><td>'+stars+'</td><td>'+(r.approved?'<span style="color:var(--success);">'+__('confirmed')+'</span>':'<span style="color:var(--danger);">'+__('pending')+'</span>')+'</td><td><div class="actions">'+
+      (!r.approved?'<button class="admin-btn-edit" data-approve-review="'+r.id+'">'+__('confirm')+'</button>':'')+
+      '<button class="admin-btn-danger" data-del-review="'+r.id+'">'+__('delete')+'</button></div></td></tr>'
+    }).join('')+'</tbody></table></div>'
+}
+function renderAdminMedia(){
+  var c=document.getElementById('adminMediaList')
+  if(!data.media.length){c.innerHTML='<p style="text-align:center;color:var(--text-muted);padding:20px;">—</p>';return}
+  c.innerHTML='<div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>#</th><th>'+__('name')+'</th><th>'+__('type')+'</th><th>'+__('genre')+'</th><th>'+__('edit')+'</th></tr></thead><tbody>'+
+    data.media.map(function(m,i){return '<tr><td>'+(i+1)+'</td><td>'+esc(textByLang(m.title))+'</td><td>'+esc(m.type)+'</td><td>'+esc(textByLang(m.category))+'</td><td><div class="actions"><button class="admin-btn-danger" data-del-media="'+m.id+'">'+__('delete')+'</button></div></td></tr>'}).join('')+'</tbody></table></div>'
+}
+function renderAdminBookings(){
+  var c=document.getElementById('adminBookingsList');var filter=(document.getElementById('adminBookingFilter')||{}).value||'all'
+  var list=data.bookings.slice();if(filter!=='all')list=list.filter(function(b){return b.status===filter})
+  if(!list.length){c.innerHTML='<p style="text-align:center;color:var(--text-muted);padding:20px;">—</p>';return}
+  c.innerHTML='<div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>#</th><th>'+__('name')+'</th><th>'+__('bookDate')+'</th><th>'+__('bookTime')+'</th><th>'+__('bookDuration')+'</th><th>'+__('status')+'</th><th>'+__('edit')+'</th></tr></thead><tbody>'+
+    list.sort(function(a,b){return b.createdAt-a.createdAt}).map(function(b,i){
+      var sc=b.status==='confirmed'?'confirmed':b.status==='cancelled'||b.status==='rejected'?'cancelled':'pending'
+      var st=b.status==='confirmed'?__('confirmed'):b.status==='cancelled'?__('cancelled'):b.status==='rejected'?__('rejected'):__('pending')
+      return '<tr><td>'+(i+1)+'</td><td>'+esc(b.userName)+'<br><span style="font-size:11px;color:var(--text-dim);">'+esc(b.userPhone)+'</span></td><td>'+b.date+'</td><td>'+b.time+'</td><td>'+b.duration+' '+__('hours')+'</td><td><span class="booking-card-status '+sc+'">'+st+'</span></td><td><div class="actions">'+
+        (b.status==='pending'?'<button class="admin-btn-edit" data-confirm="'+b.id+'">'+__('confirm')+'</button>':'')+
+        (b.status==='pending'?'<button class="admin-btn-danger" data-reject="'+b.id+'">'+__('reject')+'</button>':'')+
+        (b.status!=='cancelled'?'<button class="admin-btn-danger" data-cancel-booking="'+b.id+'">'+__('delete')+'</button>':'')+
+        '</div></td></tr>'
+    }).join('')+'</tbody></table></div>'
+}
+function renderAdminUsers(){
+  var c=document.getElementById('adminUsersList');var list=data.users.filter(function(u){return u.role!=='admin'})
+  if(!list.length){c.innerHTML='<p style="text-align:center;color:var(--text-muted);padding:20px;">—</p>';return}
+  c.innerHTML='<div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>#</th><th>'+__('name')+'</th><th>'+__('email')+'</th><th>'+__('phone')+'</th><th>'+__('bookings')+'</th><th>'+__('date')+'</th></tr></thead><tbody>'+
+    list.map(function(u,i){var cnt=data.bookings.filter(function(b){return b.userId===u.id}).length;return '<tr><td>'+(i+1)+'</td><td>'+esc(u.name)+'</td><td>'+esc(u.email)+'</td><td>'+esc(u.phone||'-')+'</td><td>'+cnt+'</td><td>'+new Date(u.createdAt).toLocaleDateString(currentLang==='ar'?'ar-EG':'en-US')+'</td></tr>'}).join('')+'</tbody></table></div>'
+}
+// ===== PLATFORM STYLES =====
+var PS={youtube:{label:'YouTube',color:'#ff0033',border:'rgba(255,0,51,0.3)'},spotify:{label:'Spotify',color:'#1db954',border:'rgba(29,185,84,0.3)'},anghami:{label:'Anghami',color:'#f50',border:'rgba(255,85,0,0.3)'},appleMusic:{label:'Apple Music',color:'#fa243c',border:'rgba(250,36,60,0.3)'},deezer:{label:'Deezer',color:'#ff0099',border:'rgba(255,0,153,0.3)'}}
+var PI={youtube:'<svg width="16" height="16" viewBox="0 0 24 24" fill="#ff0033"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>',spotify:'<svg width="16" height="16" viewBox="0 0 24 24" fill="#1db954"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>',anghami:'<svg width="16" height="16" viewBox="0 0 24 24" fill="#f50"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 15.219c-.249.414-.788.537-1.213.267-1.16-.714-2.68-1.096-4.214-.98-1.506.112-2.806.595-3.446 1.035-.41.274-.96.178-1.216-.232-.256-.41-.136-.939.286-1.199.818-.563 2.366-1.144 4.144-1.279 1.826-.142 3.583.308 5.04 1.21.443.278.573.875.32 1.299zm1.476-2.887c-.314.466-.94.601-1.398.278-1.506-.946-3.472-1.493-5.654-1.338-2.118.154-3.879.833-4.693 1.338a.993.993 0 01-1.393-.251.986.986 0 01.248-1.382c1.097-.699 3.144-1.494 5.569-1.673 2.496-.187 4.758.456 6.513 1.606.466.302.59.927.31 1.394zm.127-3.016c-.393.52-1.12.637-1.624.253-1.715-1.149-4.086-1.686-6.61-1.544-2.443.142-4.447.9-5.357 1.512a1.17 1.17 0 01-1.602-.293 1.18 1.18 0 01.283-1.608c1.153-.792 3.46-1.681 6.229-1.847 2.854-.177 5.546.453 7.6 1.838.527.357.649 1.088.293 1.576z"/></svg>',appleMusic:'<svg width="16" height="16" viewBox="0 0 24 24" fill="#fa243c"><path d="M17.06 21.937a12.002 12.002 0 01-10.12 0C3.288 20.168 0 16.622 0 12.007 0 5.376 5.376 0 12 0s12 5.376 12 12.007c0 4.615-3.288 8.16-6.94 9.93zM12 9.668a2.333 2.333 0 100 4.666 2.333 2.333 0 000-4.666zm5.25 2.333c0 2.899-2.351 5.25-5.25 5.25s-5.25-2.351-5.25-5.25S9.101 6.75 12 6.75s5.25 2.351 5.25 5.25z"/></svg>',deezer:'<svg width="16" height="16" viewBox="0 0 24 24" fill="#ff0099"><circle cx="12" cy="12" r="12"/><text x="12" y="16" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold" font-family="sans-serif">D</text></svg>'}
+
+// ===== VIDEO MODAL =====
+function openVideo(id,title,links){
+  document.getElementById('videoTitle').textContent=title;document.getElementById('videoMeta').textContent='Bu Kitchen'
+  document.getElementById('videoModal').classList.add('active');document.body.style.overflow='hidden'
+  if(typeof links!=='object'||links===null||Object.keys(links).length<=1){for(var _i=0;_i<data.songs.length;_i++){if(data.songs[_i].id===id){links=data.songs[_i];break}}}
+  var el=document.getElementById('platformLinks');el.innerHTML='';var plat={};for(var k in links)plat[k]=links[k]
+  plat.youtube='https://youtube.com/watch?v='+id;var ks=['youtube','spotify','anghami','appleMusic','deezer']
+  for(var pi=0;pi<ks.length;pi++){var k=ks[pi];if(plat[k]){var st=PS[k]||{};var ic=PI[k]||'';var a=document.createElement('a');a.href=plat[k];a.target='_blank';a.rel='noopener noreferrer';a.style.cssText='display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:10px;font-size:14px;font-weight:600;text-decoration:none;transition:all 0.2s;border:1px solid '+(st.border||'var(--border)')+';color:'+(st.color||'var(--text-muted)')+';';a.innerHTML=ic+' '+(st.label||k);el.appendChild(a)}}
+}
+function closeVideo(){document.getElementById('videoModal').classList.remove('active');document.getElementById('platformLinks').innerHTML='';document.body.style.overflow=''}
+
+// ===== MEDIA PLAYER =====
+function openMediaPlayer(mediaId){
+  for(var i=0;i<data.media.length;i++){if(data.media[i].id===mediaId){var m=data.media[i];var title=textByLang(m.title)
+    document.getElementById('mediaPlayerTitle').textContent=title
+    var container=document.getElementById('mediaPlayerContainer')
+    if(m.type==='video'){var ytId=extractYoutubeId(m.url);if(ytId){container.innerHTML='<div style="position:relative;padding-top:56.25%;"><iframe src="https://www.youtube.com/embed/'+ytId+'" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;border-radius:12px;" allowfullscreen></iframe></div>'}else{container.innerHTML='<video src="'+esc(m.url)+'" controls style="width:100%;border-radius:12px;max-height:400px;"></video>'}}
+    else{container.innerHTML='<div style="text-align:center;padding:40px;"><div style="font-size:48px;margin-bottom:16px;">🎵</div><audio src="'+esc(m.url)+'" controls style="width:100%;max-width:400px;"></audio></div>'}
+    document.getElementById('mediaPlayerModal').classList.add('active');document.body.style.overflow='hidden';break}}
+}
+
+// ===== EDITABLE TEXT =====
+function initEditableText(){
+  if(!currentUser||currentUser.role!=='admin')return
+  var eds=document.querySelectorAll('.editable-text')
+  for(var i=0;i<eds.length;i++){(function(el){el.contentEditable=true
+    el.addEventListener('blur',function(){var key=el.dataset.textKey;if(key){var val=el.textContent.trim();if(val){var ar=val,en=val;setText(key,ar,en);toast(__('success'))}}})
+    el.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();el.blur()}})
+  })(eds[i])}
+}
+
+// ===== SUPABASE SYNC =====
+async function syncToSupabase(){}
+
+// ===== RENDER ALL =====
+function renderAll(){renderCategories();renderSongs();renderMedia();renderArtists();renderServices();renderReviews();renderMap();}
+
+// ===== LANGUAGE =====
+let currentLang = localStorage.getItem('bukitchen_lang') || 'ar';
+function __(key) { return (LANG[currentLang]&&LANG[currentLang][key])||key; }
+function toggleLang() {
+  currentLang = currentLang === 'ar' ? 'en' : 'ar';
+  localStorage.setItem('bukitchen_lang', currentLang);
+  document.documentElement.lang = currentLang;
+  document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+  document.getElementById('langToggle').textContent = currentLang === 'ar' ? 'EN' : 'ع';
+  applyLanguage();
+}
+function applyLanguage() {
+  var els = document.querySelectorAll('[data-i18n]');
+  for (var i = 0; i < els.length; i++) { var k = els[i].dataset.i18n; if (k && __(k)) { els[i].textContent = __(k); } }
+  document.title = __('siteTitle');
+  // Update editable texts
+  var texts = document.querySelectorAll('.editable-text');
+  for (var i = 0; i < texts.length; i++) {
+    var key = texts[i].dataset.textKey;
+    if (key) { var val = getText(key); if (val) texts[i].textContent = val; }
+  }
+  renderSongs(); renderBooking();
+}
+
+// ===== INTERACTIVE FEATURES =====
+(function() {
+  var lastScroll = 0;
+  var navEl = document.querySelector('nav');
+  window.addEventListener('scroll', function() {
+    var cur = window.scrollY;
+    if (cur > 80 && cur > lastScroll) { navEl.classList.add('hidden-nav'); }
+    else { navEl.classList.remove('hidden-nav'); }
+    lastScroll = cur;
+  });
+})();
+// ===== SETUP EVENTS =====
+function setupEvents() {
+  var sub=false
+  document.getElementById('navMenu').addEventListener('click',toggleMenu)
+  document.getElementById('menuOverlay').addEventListener('click',closeMenu)
+  document.getElementById('navLoginBtn').addEventListener('click',function(){if(!currentUser)openLogin()})
+  document.getElementById('navLogoutBtn').addEventListener('click',function(){if(currentUser&&confirm('تسجيل الخروج؟'))logout()})
+  document.querySelectorAll('#menuPanel nav a').forEach(function(a){a.addEventListener('click',closeMenu)})
+  document.getElementById('menuLoginBtn').addEventListener('click',function(){closeMenu();openLogin()})
+  document.getElementById('menuLogoutBtn').addEventListener('click',function(){closeMenu();logout()})
+  document.getElementById('langToggle').addEventListener('click',toggleLang)
+  document.getElementById('showRegister').addEventListener('click',openRegister)
+  document.getElementById('showLogin').addEventListener('click',openLogin)
+  document.getElementById('loginClose').addEventListener('click',closeAllModals)
+  document.getElementById('registerClose').addEventListener('click',closeAllModals)
+  document.getElementById('loginModal').addEventListener('click',function(e){if(e.target===this)closeAllModals()})
+  document.getElementById('registerModal').addEventListener('click',function(e){if(e.target===this)closeAllModals()})
+  document.getElementById('loginForm').addEventListener('submit',async function(e){e.preventDefault();var em=document.getElementById('loginEmail').value.trim();var pw=document.getElementById('loginPassword').value;if(!em||!pw){document.getElementById('loginError').textContent='يرجى ملء جميع الحقول';document.getElementById('loginError').style.display='block';return}await login(em,pw)})
+  document.getElementById('registerForm').addEventListener('submit',async function(e){e.preventDefault();await register(document.getElementById('regName').value.trim(),document.getElementById('regUsername').value.trim(),document.getElementById('regEmail').value.trim(),document.getElementById('regPhone').value.trim(),document.getElementById('regPassword').value)})
+  var googleBusy=false;var googleHandler=async function(){if(googleBusy)return;googleBusy=true;if(typeof firebase==='undefined'||!firebase.auth){googleBusy=false;toast('Firebase غير متاح','error');return};closeAllModals();var p=new firebase.auth.GoogleAuthProvider();try{var r=await firebase.auth().signInWithPopup(p);await handleFirebaseAuth(r.user,'google')}catch(e){if(e.code!=='auth/cancelled-popup-request'&&e.code!=='auth/popup-closed-by-user')toast(e.message||'Google فشل','error')};googleBusy=false}
+  document.getElementById('googleLogin').addEventListener('click',googleHandler)
+  document.getElementById('googleRegister').addEventListener('click',googleHandler)
+  document.getElementById('catPills').addEventListener('click',function(e){
+    var pill=e.target.closest('.cat-pill');if(!pill)return
+    if(pill.dataset.typeFilter){catFilterType=pill.dataset.typeFilter;activeCategory=null;renderCategories();renderSongs();return}
+    activeCategory=pill.dataset.cat||null;renderCategories();renderSongs()})
+  document.getElementById('songsGrid').addEventListener('click',function(e){
+    var pb=e.target.closest('.btn-play-card');if(pb){var sg=null;for(var si=0;si<data.songs.length;si++){if(data.songs[si].id===pb.dataset.id){sg=data.songs[si];break}}openVideo(pb.dataset.id,pb.dataset.title,sg||{});return}
+    var db=e.target.closest('.btn-delete-card');if(db){if(!confirm('حذف الأغنية؟'))return;(async function(){try{await apiDel('/songs/'+db.dataset.del);await loadFromAPI();renderSongs();renderAdminSongs();toast('تم الحذف')}catch(err){toast(err.message,'error')}})();return}
+    var cd=e.target.closest('.song-card');if(cd){var p=cd.querySelector('.btn-play-card');if(p){var sg=null;for(var si=0;si<data.songs.length;si++){if(data.songs[si].id===p.dataset.id){sg=data.songs[si];break}}openVideo(p.dataset.id,p.dataset.title,sg||{})}}})
+  document.getElementById('songsGrid').addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){var cd=e.target.closest('.song-card');if(cd){e.preventDefault();var p=cd.querySelector('.btn-play-card');if(p){var sg=null;for(var si=0;si<data.songs.length;si++){if(data.songs[si].id===p.dataset.id){sg=data.songs[si];break}}openVideo(p.dataset.id,p.dataset.title,sg||{})}}}})
+  document.getElementById('mediaGrid').addEventListener('click',function(e){var cd=e.target.closest('.media-card');if(cd)openMediaPlayer(cd.dataset.mediaId)})
+  document.getElementById('artistsGrid').addEventListener('click',function(e){
+    var ac=e.target.closest('.artist-card');if(!ac)return;var aid=ac.dataset.artistId;var artist=null;for(var i=0;i<data.artists.length;i++){if(data.artists[i].id===aid){artist=data.artists[i];break}}
+    if(!artist)return;var avatar=artist.avatar||'';var songs=data.songs.filter(function(s){return s.artistId===aid&&(s.status==='approved'||!s.status)})
+    var socialHtml='';var links=artist.socialLinks||{};var slk={instagram:'Instagram',spotify:'Spotify',youtube:'YouTube',twitter:'X',soundcloud:'SoundCloud',tiktok:'TikTok'}
+    for(var k in slk){if(links[k])socialHtml+='<a href="'+esc(links[k])+'" target="_blank">'+slk[k]+'</a>'}
+    var songsHtml=songs.map(function(s){return'<div class="artist-song-item" data-song-id="'+s.id+'" data-song-title="'+esc(s.title)+'"><img src="'+getThumb(s.id)+'" alt=""><span>'+esc(s.title)+'</span></div>'}).join('')
+    document.getElementById('artistModalContent').innerHTML='<div class="artist-profile-header"><div class="artist-avatar" style="width:100px;height:100px;margin:0 auto 12px;">'+(avatar?'<img src="'+esc(avatar)+'" alt="">':'<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:36px;color:var(--text-dim);">♪</div>')+'</div><h3>'+esc(artist.name)+'</h3></div>'+(socialHtml?'<div class="artist-social-links">'+socialHtml+'</div>':'')+(songsHtml?'<div style="margin-top:16px;"><h4 style="font-size:16px;font-weight:700;margin-bottom:10px;">الأغاني</h4><div class="artist-songs-list">'+songsHtml+'</div></div>':'<p style="text-align:center;color:var(--text-dim);">لا توجد أغانٍ</p>')
+    document.getElementById('artistModal').classList.add('active');document.body.style.overflow='hidden'})
+  document.getElementById('artistModalContent').addEventListener('click', function(e) {
+    var item = e.target.closest('.artist-song-item');
+    if (item) {
+      var sid = item.dataset.songId;
+      var title = item.dataset.songTitle;
+      if (sid) openVideo(sid, title, {});
+    }
+  });
+  document.getElementById('videoClose').addEventListener('click',closeVideo);document.getElementById('videoModal').addEventListener('click',function(e){if(e.target===this)closeVideo()})
+  document.getElementById('artistClose').addEventListener('click',closeAllModals);document.getElementById('artistModal').addEventListener('click',function(e){if(e.target===this)closeAllModals()})
+  document.getElementById('mediaPlayerClose').addEventListener('click',function(){document.getElementById('mediaPlayerModal').classList.remove('active');document.body.style.overflow='';document.getElementById('mediaPlayerContainer').innerHTML=''})
+  document.getElementById('mediaPlayerModal').addEventListener('click',function(e){if(e.target===this){document.getElementById('mediaPlayerModal').classList.remove('active');document.getElementById('mediaPlayerContainer').innerHTML='';document.body.style.overflow=''}})
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeAllModals();closeVideo();document.getElementById('mediaPlayerModal').classList.remove('active');document.getElementById('mediaPlayerContainer').innerHTML='';document.body.style.overflow=''}})
+  document.getElementById('menuRequestSong').addEventListener('click',function(){closeMenu();document.getElementById('songRequestModal').classList.add('active')})
+  document.getElementById('songRequestClose').addEventListener('click',closeAllModals);document.getElementById('songRequestModal').addEventListener('click',function(e){if(e.target===this)closeAllModals()})
+  document.getElementById('songRequestForm').addEventListener('submit',async function(e){e.preventDefault();if(!currentUser){toast('خطأ','error');return}
+    var t=document.getElementById('reqSongTitle').value.trim();var a=document.getElementById('reqSongArtist').value.trim();var g=document.getElementById('reqSongGenre').value.trim();var u=document.getElementById('reqSongUrl').value.trim();var l=document.getElementById('reqSongLinks').value.trim();var n=document.getElementById('reqSongNotes').value.trim()
+    if(!t||!a||!g){toast('يرجى ملء الحقول','error');return};try{await apiPost('/requests',{title:t,artist:a,genre:g,url:u,links:l,notes:n});toast('تم إرسال الطلب');document.getElementById('songRequestForm').reset();closeAllModals()}catch(err){toast(err.message,'error')}})
+  document.getElementById('addReviewBtn').addEventListener('click',function(){if(!currentUser){openLogin();return}document.getElementById('reviewModal').classList.add('active')})
+  document.getElementById('reviewClose').addEventListener('click',closeAllModals);document.getElementById('reviewModal').addEventListener('click',function(e){if(e.target===this)closeAllModals()})
+  document.getElementById('starRating').addEventListener('click',function(e){var s=e.target.closest('[data-star]');if(!s)return;var rating=parseInt(s.dataset.star);var stars=this.querySelectorAll('[data-star]');for(var i=0;i<stars.length;i++){stars[i].textContent=i<rating?'★':'☆'};this.dataset.rating=rating})
+  document.getElementById('reviewForm').addEventListener('submit',async function(e){e.preventDefault()
+    var name=document.getElementById('revName').value.trim();var rating=parseInt(document.getElementById('starRating').dataset.rating)||0;var text=document.getElementById('revText').value.trim()
+    if(!name||!rating||!text){toast('يرجى ملء الحقول','error');return};try{await apiPost('/reviews',{userName:name,rating:rating,text:text});toast('تم إضافة التقييم');document.getElementById('reviewForm').reset();document.getElementById('starRating').dataset.rating='0';var ss=document.querySelectorAll('#starRating [data-star]');for(var i=0;i<ss.length;i++)ss[i].textContent='☆';closeAllModals()}catch(err){toast(err.message,'error')}})
+  document.getElementById('adminTabs').addEventListener('click',function(e){var tab=e.target.closest('.admin-tab');if(!tab)return;activeAdminTab=tab.dataset.tab;document.querySelectorAll('.admin-tab').forEach(function(t){t.classList.remove('active')});tab.classList.add('active');document.querySelectorAll('.admin-section').forEach(function(s){s.classList.remove('active')});document.getElementById(activeAdminTab).classList.add('active')})
+  var searchTimer;document.getElementById('adminSearchSongs').addEventListener('input',function(e){clearTimeout(searchTimer);searchTimer=setTimeout(function(){renderAdminSongs(e.target.value.trim())},300)})
+  document.getElementById('adminAddSong').addEventListener('click',function(){var s=document.getElementById('adminSongCategory');s.innerHTML=data.categories.map(function(c){return'<option value="'+c.id+'">'+esc(c.name)+'</option>'}).join('');var a=document.getElementById('adminSongArtist');a.innerHTML='<option value="">—</option>'+data.artists.map(function(ar){return'<option value="'+ar.id+'">'+esc(ar.name)+'</option>'}).join('');document.getElementById('addSongModal').classList.add('active')})
+  document.getElementById('addSongClose').addEventListener('click',closeAllModals);document.getElementById('addSongModal').addEventListener('click',function(e){if(e.target===this)closeAllModals()})
+  document.getElementById('addSongForm').addEventListener('submit',async function(e){e.preventDefault();if(sub)return;sub=true;var url=document.getElementById('adminSongUrl').value.trim();var title=document.getElementById('adminSongTitle').value.trim();var catId=document.getElementById('adminSongCategory').value;var artistId=document.getElementById('adminSongArtist').value;var vid=extractYoutubeId(url);if(!vid){sub=false;toast('رابط غير صالح','error');return};try{await apiPost('/songs',{id:vid,title:title||'Song '+(data.songs.length+1),artistId:artistId,catId:catId,spotify:document.getElementById('adminSongSpotify').value.trim()||'',anghami:document.getElementById('adminSongAnghami').value.trim()||'',appleMusic:document.getElementById('adminSongApple').value.trim()||'',deezer:document.getElementById('adminSongDeezer').value.trim()||''});await loadFromAPI();renderSongs();renderAdminSongs();toast('تمت الإضافة');closeAllModals();document.getElementById('addSongForm').reset()}catch(err){toast(err.message,'error')};sub=false})
+  document.getElementById('adminAddCategory').addEventListener('click',function(){document.getElementById('addCategoryModal').classList.add('active')})
+  document.getElementById('addCategoryClose').addEventListener('click',closeAllModals);document.getElementById('addCategoryModal').addEventListener('click',function(e){if(e.target===this)closeAllModals()})
+  document.getElementById('addCategoryForm').addEventListener('submit',async function(e){e.preventDefault();if(sub)return;sub=true;var name=document.getElementById('adminCatName').value.trim();var type=document.getElementById('adminCatType').value;if(!name){sub=false;toast('أدخل الاسم','error');return};try{await apiPost('/categories',{name:name,type:type});await loadFromAPI();renderCategories();renderSongs();renderAdminCategories();toast('تمت الإضافة');closeAllModals();document.getElementById('addCategoryForm').reset()}catch(err){toast(err.message,'error')};sub=false})
+  document.getElementById('adminAddService').addEventListener('click',function(){document.getElementById('serviceModalTitle').textContent='إضافة خدمة';document.getElementById('serviceForm').reset();document.getElementById('serviceModal').classList.add('active')})
+  document.getElementById('serviceClose').addEventListener('click',closeAllModals);document.getElementById('serviceModal').addEventListener('click',function(e){if(e.target===this)closeAllModals()})
+  document.getElementById('serviceForm').addEventListener('submit',async function(e){e.preventDefault();var na=document.getElementById('svcName').value.trim();var de=document.getElementById('svcDesc').value.trim();var pr=parseInt(document.getElementById('svcPrice').value);var di=document.getElementById('svcDiscount').value.trim();var fe=document.getElementById('svcFeatured').checked;if(!na||!de||!pr){toast('أكمل الحقول','error');return};try{await apiPost('/services',{name:na,desc:de,price:pr,discount:di,featured:fe});await loadFromAPI();renderServices();renderAdminServices();toast('تمت الإضافة');closeAllModals();document.getElementById('serviceForm').reset()}catch(err){toast(err.message,'error')}})
+  document.getElementById('adminAddMedia').addEventListener('click',function(){document.getElementById('addMediaModal').classList.add('active')})
+  document.getElementById('addMediaClose').addEventListener('click',closeAllModals);document.getElementById('addMediaModal').addEventListener('click',function(e){if(e.target===this)closeAllModals()})
+  document.getElementById('addMediaForm').addEventListener('submit',async function(e){e.preventDefault();var ty=document.getElementById('mediaType').value;var ti=document.getElementById('mediaTitle').value.trim();var ur=document.getElementById('mediaUrl').value.trim();var ca=document.getElementById('mediaCategory').value.trim();if(!ti||!ca){toast('أكمل الحقول','error');return};try{await apiPost('/media',{type:ty,title:ti,url:ur,category:ca});await loadFromAPI();renderMedia();renderAdminMedia();toast('تمت الإضافة');closeAllModals();document.getElementById('addMediaForm').reset()}catch(err){toast(err.message,'error')}})
+  document.getElementById('adminBookingFilter').addEventListener('change',renderAdminBookings)
+  document.getElementById('adminReviewFilter').addEventListener('change',renderAdminReviews)
+  document.querySelector('.admin-panel-content').addEventListener('click',async function(e){if(!currentUser||currentUser.role!=='admin')return
+    var ds=e.target.closest('[data-del-song]');if(ds){if(!confirm('حذف؟'))return;try{await apiDel('/songs/'+ds.dataset.delSong);await loadFromAPI();renderSongs();renderAdminSongs();toast('تم الحذف')}catch(err){toast(err.message,'error')};return}
+    var dc=e.target.closest('[data-del-cat]');if(dc){if(!confirm('حذف؟'))return;try{await apiDel('/categories/'+dc.dataset.delCat);await loadFromAPI();renderCategories();renderSongs();renderAdminCategories();toast('تم الحذف')}catch(err){toast(err.message,'error')};return}
+    var dsv=e.target.closest('[data-del-svc]');if(dsv){if(!confirm('حذف؟'))return;try{await apiDel('/services/'+dsv.dataset.delSvc);await loadFromAPI();renderServices();renderAdminServices();toast('تم الحذف')}catch(err){toast(err.message,'error')};return}
+    var dr=e.target.closest('[data-del-review]');if(dr){if(!confirm('حذف؟'))return;try{await apiDel('/reviews/'+dr.dataset.delReview);await loadFromAPI();renderReviews();renderAdminReviews();toast('تم الحذف')}catch(err){toast(err.message,'error')};return}
+    var dm=e.target.closest('[data-del-media]');if(dm){if(!confirm('حذف؟'))return;try{await apiDel('/media/'+dm.dataset.delMedia);await loadFromAPI();renderMedia();renderAdminMedia();toast('تم الحذف')}catch(err){toast(err.message,'error')};return}
+    var cb=e.target.closest('[data-confirm]');if(cb){if(!confirm('تأكيد؟'))return;try{await apiPatch('/bookings/'+cb.dataset.confirm+'/status',{status:'confirmed'});await loadFromAPI();renderAdminBookings();renderUserBookings();toast('تم التأكيد')}catch(err){toast(err.message,'error')};return}
+    var rb=e.target.closest('[data-reject]');if(rb){if(!confirm('رفض؟'))return;try{await apiPatch('/bookings/'+rb.dataset.reject+'/status',{status:'rejected'});await loadFromAPI();renderAdminBookings();renderUserBookings();toast('تم الرفض')}catch(err){toast(err.message,'error')};return}
+    var cbb=e.target.closest('[data-cancel-booking]');if(cbb){if(!confirm('إلغاء؟'))return;try{await apiPatch('/bookings/'+cbb.dataset.cancelBooking+'/status',{status:'cancelled'});await loadFromAPI();renderAdminBookings();renderUserBookings();toast('تم الإلغاء')}catch(err){toast(err.message,'error')};return}
+    var ar=e.target.closest('[data-approve-req]');if(ar){if(!confirm('موافقة على طلب الأغنية؟'))return;try{await apiPatch('/requests/'+ar.dataset.approveReq+'/status',{status:'approved'});await loadFromAPI();renderSongs();renderAdminSongs();renderAdminRequests();toast('تم الموافقة')}catch(err){toast(err.message,'error')};return}
+    var rr=e.target.closest('[data-reject-req]');if(rr){if(!confirm('رفض طلب الأغنية؟'))return;try{await apiPatch('/requests/'+rr.dataset.rejectReq+'/status',{status:'rejected'});await loadFromAPI();renderAdminRequests();toast('تم الرفض')}catch(err){toast(err.message,'error')};return}
+    var arv=e.target.closest('[data-approve-review]');if(arv){if(!confirm('نشر التقييم؟'))return;try{await apiPatch('/reviews/'+arv.dataset.approveReview+'/approve',{});await loadFromAPI();renderReviews();renderAdminReviews();toast('تم النشر')}catch(err){toast(err.message,'error')};return}})
+  document.getElementById('userBookings').addEventListener('click',async function(e){var btn=e.target.closest('.btn-cancel-booking');if(!btn)return;if(!confirm('إلغاء الحجز؟'))return;try{await apiDel('/bookings/'+btn.dataset.bid);await loadFromAPI();renderUserBookings();renderAdminBookings();toast('تم الإلغاء')}catch(err){toast(err.message,'error')}})
+  document.getElementById('mapEditClose').addEventListener('click',closeAllModals)
+  document.getElementById('mapEditModal').addEventListener('click',function(e){if(e.target===this)closeAllModals()})
+  document.getElementById('mapEditForm').addEventListener('submit',async function(e){e.preventDefault();var la=document.getElementById('mapLat').value.trim();var ln=document.getElementById('mapLng').value.trim();var ad=document.getElementById('mapAddress').value.trim();if(!la||!ln||!ad){toast('أكمل الحقول','error');return};try{var loc=data.settings.location||{};await apiPut('/settings',{location:{lat:la,lng:ln,address:{ar:ad,en:ad}}});data.settings.location={lat:la,lng:ln,address:{ar:ad,en:ad}};renderMap();toast('تم الحفظ');closeAllModals()}catch(err){toast(err.message,'error')}})
+}
+
+// ===== INIT =====
+(async function init() {
+  await loadFromAPI();
+  await restoreSession();
+  renderCategories();
+  renderSongs();
+  renderMedia();
+  renderArtists();
+  renderServices();
+  renderReviews();
+  renderMap();
+  updateUI();
+  setupEvents();
+  applyLanguage();
+  initEditableText();
+})();
+
+</script>
+</body>
+</html>
